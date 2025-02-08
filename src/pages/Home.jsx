@@ -72,9 +72,11 @@ function Home() {
   };
 
   // tab handling
-  const [activeTab, setActiveTab] = useState(null);
+  const [activeTab, setActiveTab] = useState('default');
   const handleTabClick = (tabId) => {
-    setActiveTab(tabId);
+    if (tabId !== 'default') {
+      setActiveTab(tabId);
+    }
   };  
 
   return (
@@ -82,12 +84,35 @@ function Home() {
       <h1>Flutter Focus</h1>
       <div className="blocks">
         <div className="block mainBlock">
-          <Link to="/calendar"><button>Calendar</button></Link>
-          <Link to="/study"><button>Study Now</button></Link>
-          <Link to="/garden"><button>Garden</button></Link>
           <div className="tabButton">
             <button className="tablinks" onClick={() => handleTabClick('Tab1')}>Calendar</button>
             <button className="tablinks" onClick={() => handleTabClick('Tab2')}>Study</button>
+          </div>
+          <div className="tabContent">
+            {activeTab === 'default' && 
+            <div>
+              <h2>Study Calendar</h2>
+                <input
+                  type="text"
+                  placeholder="Exam Name"
+                  value={examName}
+                  onChange={(e) => setExamName(e.target.value)}
+                />
+                <input
+                  type="date"
+                  value={examDate}
+                  onChange={(e) => setExamDate(e.target.value)}
+                />
+                <button onClick={addExam}>Add Exam</button>
+          
+                <ul>
+                  {exams.map((exam, index) => (
+                    <li key={index}>
+                      {exam.name} - {format(new Date(exam.date), "PP")}
+                    </li>
+                  ))}
+                </ul>
+            </div>}
           </div>
           <div id="Tab1" className="tabcontent">
             <div className={`tab ${activeTab === 'Tab1' ? 'active' : ''}`}>
@@ -112,7 +137,7 @@ function Home() {
                       </li>
                     ))}
                   </ul>
-                </div>
+              </div>
           </div>
 
           <div id="Tab2" className="tabcontent">
