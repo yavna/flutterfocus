@@ -51,6 +51,12 @@ function Home() {
   const handleComplete = () => {
     console.log("Time's up");
   };
+
+  const reset = () => {
+    setTimeLeft(60000);
+    setIsStarted(false);
+    setStage(0);
+  }
   
   // Handling time reduction logic (counts down in seconds)
   useEffect(() => {
@@ -98,9 +104,6 @@ function Home() {
       <h1>Flutter Focus</h1>
       <div className="blocks">
         <div className="block mainBlock">
-          <Link to="/calendar"><button>Calendar</button></Link>
-          <Link to="/study"><button>Study Now</button></Link>
-          <Link to="/garden"><button>Garden</button></Link>
           <div className="tabButton">
             <button className="tablinks" onClick={() => handleTabClick('Tab1')}>Calendar</button>
             <button className="tablinks" onClick={() => handleTabClick('Tab2')}>Study</button>
