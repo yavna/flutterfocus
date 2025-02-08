@@ -96,11 +96,11 @@ function Home() {
 
   // butterfly info
   const [butterflies, setButterflies] = useState([]);
-
-  const addButterfly = () => {
-    for (let index = 0; index < butterflyCounter; index++){
-      setButterflies([...butterflies, "🦋"]);
+  const [isButtonClicked, setIsButtonClicked] = useState(false);const addButterfly = () => {
+    for (let index = 0; index < butterflyCounter; index++) {
+      setButterflies((prevButterflies) => [...prevButterflies, "🦋"]);
     }
+    setIsButtonClicked(true);
   };
 
   const generateStudyPlan = async () => {
