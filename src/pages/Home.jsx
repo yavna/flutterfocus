@@ -203,6 +203,7 @@ function Home() {
                 <h2>Set Timer</h2>
                 <input
                   type="number"
+                  id="timer-input"
                   placeholder="Hours"
                   value={inputHours}
                   onChange={(e) => setInputHours(Number(e.target.value))}
@@ -210,6 +211,7 @@ function Home() {
                 />
                 <input
                   type="number"
+                  id="timer-input"
                   placeholder="Minutes"
                   value={inputMinutes}
                   onChange={(e) => setInputMinutes(Number(e.target.value))}
@@ -219,7 +221,7 @@ function Home() {
                 <button className="internalButton" onClick={updateTimer}>Set Timer</button>
               </div>
               <div>
-                <p>Time Left: {formatTime(timeLeft)}</p>
+                <h4>Time Left: {formatTime(timeLeft)}</h4>
                 <button className="internalButton" onClick={pauseTimer}>
                   {isPaused ? "Resume" : "Pause"}
                 </button>
