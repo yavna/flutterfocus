@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { incrementCounter } from './Home';
 
 function Garden() {
   const [butterflies, setButterflies] = useState([]);
 
   const addButterfly = () => {
-    setButterflies([...butterflies, "🦋"]);
+    for (let index = 0; index < butterflyCounter; index++){
+      setButterflies([...butterflies, "🦋"]);
+    }
   };
 
 

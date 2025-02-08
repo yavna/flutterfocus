@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Countdown from 'react-countdown';
 import { Link } from "react-router-dom";
+import { incrementCounter } from './Home';
 
 function StudyNow() {
   const [stage, setStage] = useState(0);
@@ -10,7 +11,6 @@ function StudyNow() {
   const [isStarted, setIsStarted] = useState(false); // To control if timer is started or not
 
   const stages = ["🐛", "🟡 Cocoon", "🦋 Butterfly"];
-
 
   const nextStage = () => {
     if (!isStarted) {
@@ -37,6 +37,8 @@ function StudyNow() {
       }, 1000);
     } if (timeLeft === 30000 || timeLeft === 0) {
       setStage(prevStage => Math.min(prevStage + 1, stages.length - 1));
+    } if (timeLeft === 0) {
+      incrementCounter();
     }
     return () => clearInterval(interval); // Cleanup on component unmount
   }, [isPaused, timeLeft, isStarted]);

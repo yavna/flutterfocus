@@ -4,6 +4,14 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Countdown from 'react-countdown';
 
+window.butterflyCounter = window.butterflyCounter || 0;
+
+function incrementCounter() {
+    window.butterflyCounter++;
+}
+
+export { incrementCounter };
+
 function Home() {
   const [exams, setExams] = useState([]);
     const [examName, setExamName] = useState("");
@@ -47,7 +55,9 @@ function Home() {
           }, 1000);
         } if (timeLeft === 30000 || timeLeft === 0) {
           setStage(prevStage => Math.min(prevStage + 1, stages.length - 1));
-        }
+        } if (timeLeft === 0) {
+          incrementCounter();
+        }     
         return () => clearInterval(interval); // Cleanup on component unmount
       }, [isPaused, timeLeft, isStarted]);
   return (
