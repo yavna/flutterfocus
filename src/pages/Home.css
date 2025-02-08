@@ -14,12 +14,12 @@
     min-height: 50vh;
 }
 
-.tab {
-    display:none
+.showContent {
+    display: block
 }
 
-.tab.active {
-    display: block;
+.tabcontent {
+    display:none
 }
 
 .tabButton {
