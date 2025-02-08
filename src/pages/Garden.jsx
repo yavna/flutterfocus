@@ -12,7 +12,7 @@ function Garden() {
   return (
     <div>
       <h2>Garden</h2>
-      <button onClick={addButterfly}>Release Butterfly</button>
+      <button onClick={addButterfly}>Release butterly collection</button>
       <div>{butterflies.map((b, i) => <span key={i}>{b}</span>)}</div>
       <Link to="/home"><button>Back</button></Link>
     </div>
