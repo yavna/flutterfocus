@@ -34,6 +34,7 @@ function Home() {
   const [isStarted, setIsStarted] = useState(false); // To control if timer is started or not
   const [studyPlan, setStudyPlan] = useState("");
   const [hoursPerDay, setHoursPerDay] = useState("");
+  const [selectedExam, setSelectedExam] = useState(null);
 
   const startTimer = () => {
     setIsStarted(true);
@@ -91,6 +92,11 @@ function Home() {
   };
 
   const generateStudyPlan = async () => {
+    if (!selectedExam) {
+      alert("Please select an exam first.");
+      return;
+    }
+
     try {
       console.log("Sending request to backend...");
       
@@ -100,8 +106,8 @@ function Home() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          examName,
-          examDate,
+          examName: selectedExam.name,
+          examDate: selectedExam.date,
           hoursPerDay,
         }),
       });
@@ -130,6 +136,10 @@ function Home() {
       setActiveTab(tabId);
     }
   };  
+
+  const handleSelectExam = (index) => {
+    setSelectedExam(exams[index]); // Ensure it pulls from the exams state
+  };
 
   return (
     <div className="home">
@@ -163,12 +173,13 @@ function Home() {
                   <button onClick={addExam}>Add Exam</button>
             
                   <ul>
-                    {exams.map((exam, index) => (
-                      <li key={index}>
-                        {exam.name} - {format(new Date(exam.date), "PP")}
+                  {exams.map((exam, index) => (
+                    <li key={index}>
+                      {exam.name} - {format(new Date(exam.date), "PP")}
+                      <button onClick={() => handleSelectExam(index)}>Select</button>
                       </li>
-                    ))}
-                  </ul>
+                  ))}
+                </ul>
               </div>
           </div>
 
@@ -204,6 +215,9 @@ function Home() {
         </div> 
         ) : (
           <p>No study plan generated yet. Please add an exam and click Generate Study Plan.</p>
+        )}
+        {selectedExam && (
+          <p><strong>Selected Exam:</strong> {selectedExam.name} on {format(new Date(selectedExam.date), "PP")}</p>
         )}
         <button onClick={generateStudyPlan}>Generate Study Plan</button>
       </div>
