@@ -9,6 +9,10 @@
     display: inline-flex;
 }
 
+.internalButton {
+    margin: 3px;
+}
+
 .mainBlock {
     min-width: 40vw;
     min-height: 50vh;
@@ -44,6 +48,10 @@
     height: 5px; /* Adjust as needed */
     background-color: #e9edc9; /* Color of the tab "lip" */
     border-radius: 5px 5px 0 0; 
+}
+
+.title {
+    text-align: center;
 }
 
 /* .tab {

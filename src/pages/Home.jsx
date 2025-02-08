@@ -144,7 +144,7 @@ function Home() {
 
   return (
     <div className="home">
-      <h1>Flutter Focus</h1>
+      <h1 className="title">Flutter Focus</h1>
       <div className="blocks">
         <div className="block mainBlock">
           <div className="tabButton">
@@ -170,7 +170,7 @@ function Home() {
               value={examDate}
               onChange={(e) => setExamDate(e.target.value)}
             />
-            <button onClick={addExam}>Add Exam</button>
+            <button style={{marginLeft: '10px'}} onClick={addExam}>Add Exam</button>
       
             <ul>
               {exams.map((exam, index) => (
@@ -204,15 +204,15 @@ function Home() {
                   min="0"
                   max="59"
                 />
-                <button onClick={updateTimer}>Set Timer</button>
+                <button className="internalButton" onClick={updateTimer}>Set Timer</button>
               </div>
               <div>
                 <p>Time Left: {formatTime(timeLeft)}</p>
-                <button onClick={pauseTimer}>
+                <button className="internalButton" onClick={pauseTimer}>
                   {isPaused ? "Resume" : "Pause"}
                 </button>
-                <button onClick={startTimer} disabled={isStarted}>Study</button>
-                <button onClick={reset}>Reset</button>
+                <button className="internalButton" onClick={startTimer} disabled={isStarted}>Study</button>
+                <button className="internalButton" onClick={reset}>Reset</button>
               </div>
             </div>
         </div>
