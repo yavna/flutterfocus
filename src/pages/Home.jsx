@@ -31,7 +31,7 @@ function Home() {
   const [studyPlan, setStudyPlan] = useState("");
   const [hoursPerDay, setHoursPerDay] = useState("");
 
-  const stages = ["🐛", "🟡 Cocoon", "🦋 Butterfly"];
+  const stages = ["🐛", "🟡", "🦋 You've earned a butterfly!"];
 
   const nextStage = () => {
     if (!isStarted) {
@@ -48,6 +48,12 @@ function Home() {
     setStage(stage + 1);
     setTimeLeft(60000); // Reset time (optional)
   };
+
+  const reset = () => {
+    setTimeLeft(60000);
+    setIsStarted(false);
+    setStage(0);
+  }
   
   // Handling time reduction logic (counts down in seconds)
   useEffect(() => {
@@ -106,6 +112,11 @@ function Home() {
   };
   
   
+  // tab handling
+  const [activeTab, setActiveTab] = useState(null);
+  const handleTabClick = (tabId) => {
+    setActiveTab(tabId);
+  };  
 
   return (
     <div className="home">
@@ -117,7 +128,7 @@ function Home() {
             <button className="tablinks" onClick={() => openTab('Tab2')}>Study</button>
           </div>
           <div id="Tab1" className="tabcontent">
-            <div>
+            <div className={`tab ${activeTab === 'Tab1' ? 'active' : ''}`}>
                   <h2>Study Calendar</h2>
                   <input
                     type="text"
@@ -149,7 +160,7 @@ function Home() {
           </div>
 
           <div id="Tab2" className="tabcontent">
-            <div>
+            <div className={`tab ${activeTab === 'Tab2' ? 'active' : ''}`}>
               <h2>Study Now</h2>
               <motion.div animate={{ scale: 1.2 }} transition={{ duration: 0.5 }}>
                 <p>{stages[stage]}</p>
@@ -161,12 +172,13 @@ function Home() {
                   {isPaused ? "Resume" : "Pause"}
                 </button>
                 <button onClick={nextStage}>Start</button>
+                <button onClick={reset}>Reset</button>
               </div>
             </div>
           </div>
         </div>
         <div className="block">
-          <h2>Garden</h2>
+          <h2 style={{ marginTop: '5px'}}>Garden</h2>
           <button onClick={addButterfly}>Release butterly collection</button>
           <div>{butterflies.map((b, i) => <span key={i}>{b}</span>)}</div>
         </div>
