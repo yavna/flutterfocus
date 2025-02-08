@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import './Home.css'
 import Countdown from 'react-countdown';
+import { details } from "framer-motion/client";
 
 window.butterflyCounter = window.butterflyCounter || 0;
 
@@ -14,6 +15,163 @@ function incrementCounter() {
 export { incrementCounter };
 
 function Home() {
+
+  // study plan calendar things
+  function formatStudyPlan(rawString) {
+    const cleanedString = rawString.replace(/<br\s*\/?>/g, '').trim();
+  
+    let parsedOuter;
+    try {
+      parsedOuter = JSON.parse(cleanedString);
+    } catch (err) {
+      console.error('Error parsing outer JSON:', err);
+      return rawString;
+    }
+  
+    const replacements = {
+      day: 'Day',
+      practiceProblems: 'Practice Problems',
+      studyTopics: 'Study Topics',
+      breakTimes: 'Break Times',
+      revisionStrategies: 'Revision Strategies',
+      time: 'Time',
+      topic: 'Topic',
+      description: 'Description',
+      generalRecommendations: 'General Recommendations',
+      recommendations : 'Recommendations',
+      activities: 'Activities',
+      activity: 'Activity',
+      difficulty: 'Difficulty',
+      revisionStrategy: 'Revision Strategy',
+      importantNotes: 'Important Notes',
+      startTime: 'Start Time',
+      endTime: 'End Time',
+      notes: 'Notes',
+      break: 'Break',
+      DifficultyFocus: 'Difficulty',
+      focus: 'Focus',
+      date : 'Date',
+      general : 'General',
+      duration : 'Duration',
+      revision : 'Revision',
+      type : 'Type',
+      materials : 'Materials',
+      breakSuggestions : 'Break Suggestions',
+      focusRecommendations : 'Focus Recommendations',
+      additionalNotes : 'Additional Notes',
+      schedule : 'Schedule',
+      examDay : 'Exam Day',
+      FocusAreas : 'Focus Areas',
+      practice : 'Practice',
+      details : 'Details',
+      DifficultyLevel : 'Difficulty Level',
+      TimeManagement : 'Time Management',
+      keyConcepts : 'Key Concepts',
+      commonPitfalls : 'Common Pitfalls',
+      DayTips : 'Day Tips',
+      problemSolving : 'Problem Solving',
+      dailySchedule : 'Daily Schedule',
+    };
+  
+
+    const replaceWords = (str) => {
+      for (const [key, value] of Object.entries(replacements)) {
+        const regex = new RegExp(key, 'gi');
+        str = str.replace(regex, value);
+      }
+      return str;
+    };
+
+    const removeHeaders = (str) => {
+      const headerRegex = /"examName":.*?,|"examDate":.*?,|"hoursPerDay":.*?,/g;
+      return str.replace(headerRegex, '');
+    };
+
+    const newLines = (str) => {
+      const headingRegex = new RegExp(Object.values(replacements).join('|'), 'gi');
+      return str.replace(headingRegex, match => `\n${match}`);
+    };
+  
+    if (parsedOuter && typeof parsedOuter.studyPlan === 'string') {
+      try {
+        const innerPlan = JSON.parse(parsedOuter.studyPlan);
+        let formattedPlan = JSON.stringify(innerPlan, null, 2);
+
+        formattedPlan = removeHeaders(formattedPlan);
+
+        formattedPlan = formattedPlan.replace(/[{}[\],"]/g, '');
+    
+        formattedPlan = replaceWords(formattedPlan);
+
+      const lines = formattedPlan.split('\n');
+      const filteredLines = lines.filter(line => !/^[\s]*$/.test(line));
+      formattedPlan = filteredLines.join('\n');
+  
+        return formattedPlan;
+      } catch (err) {
+        console.error('Error parsing inner studyPlan JSON:', err);
+        return rawString;
+      }
+    } else {
+      let formattedPlan = JSON.stringify(parsedOuter, null, 2);
+  
+      formattedPlan = formattedPlan.replace(/[{}[\],"]/g, '');
+
+      formattedPlan = newLines(formattedPlan);
+
+      formattedPlan = replaceWords(formattedPlan);
+  
+      return formattedPlan;
+    }
+  }
+  
+
+  const generateStudyPlan = async () => {
+    if (!selectedExam) {
+      alert("Please select an exam first.");
+      return;
+    }
+  
+    try {
+      console.log("Sending request to backend...");
+  
+      const response = await fetch("http://localhost:5000/api/generate-study-plan", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          examName: selectedExam.name,
+          examDate: selectedExam.date,
+          hoursPerDay,
+        }),
+      });
+  
+      if (!response.ok) {
+        console.error("Failed to generate study plan. Response:", response);
+        return;
+      }
+  
+      const data = await response.json();
+      console.log("Raw Study Plan Data:", data);
+  
+      // Format the study plan string
+      const formattedPlan = formatStudyPlan(data.studyPlan);
+      setStudyPlan(formattedPlan);
+  
+      const examWithPlan = {
+        ...selectedExam,
+        studyPlan: formattedPlan,
+      };
+      console.log("Exam with formatted study plan:", examWithPlan);
+      
+    } catch (error) {
+      console.error("Error fetching study plan:", error);
+    }
+  };
+
+  // ui components
+
   const [exams, setExams] = useState([]);
   const [examName, setExamName] = useState("");
   const [examDate, setExamDate] = useState("");
@@ -105,46 +263,8 @@ function Home() {
     }
     setIsButtonClicked(true);
   };
-
-
-  const generateStudyPlan = async () => {
-    if (!selectedExam) {
-      alert("Please select an exam first.");
-      return;
-    }
-
-    try {
-      console.log("Sending request to backend...");
-      
-      const response = await fetch("http://localhost:5000/api/generate-study-plan", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          examName: selectedExam.name,
-          examDate: selectedExam.date,
-          hoursPerDay,
-        }),
-      });
   
-      console.log("Response received:", response);
-  
-      if (!response.ok) {
-        console.error("Failed to generate study plan. Response:", response);
-        return;
-      }
-  
-      const data = await response.json();
-      console.log("Study Plan Data:", data);
-      setStudyPlan(data.studyPlan.replace(/\n/g, "<br/>"));
-    } catch (error) {
-      console.error("Error fetching study plan:", error);
-    }
-    <div className="study-plan-box" dangerouslySetInnerHTML={{ __html: studyPlan }} />
-  };
-  
-  
+    
   // tab handling
   const [toggle, setToggle] = useState(1);
   function handleTabClick(id) {
