@@ -35,8 +35,8 @@ function Home() {
   const [studyPlan, setStudyPlan] = useState("");
   const [hoursPerDay, setHoursPerDay] = useState("");
 
-  const [inputHours, setInputHours] = useState(0); // Hours input
-  const [inputMinutes, setInputMinutes] = useState(0); // Minutes input
+  const [inputHours, setInputHours] = useState(""); // Hours input
+  const [inputMinutes, setInputMinutes] = useState(""); // Minutes input
 
   const startTimer = () => {
     setIsStarted(true);
@@ -96,11 +96,11 @@ function Home() {
 
   // butterfly info
   const [butterflies, setButterflies] = useState([]);
-
-  const addButterfly = () => {
-    for (let index = 0; index < butterflyCounter; index++){
-      setButterflies([...butterflies, "🦋"]);
+  const [isButtonClicked, setIsButtonClicked] = useState(false);const addButterfly = () => {
+    for (let index = 0; index < butterflyCounter; index++) {
+      setButterflies((prevButterflies) => [...prevButterflies, "🦋"]);
     }
+    setIsButtonClicked(true);
   };
 
   const generateStudyPlan = async () => {
@@ -189,16 +189,16 @@ function Home() {
               {/* Timer Input Section */}
               <div>
                 <h2>Set Timer</h2>
-                <label>Hours: </label>
                 <input
                   type="number"
+                  placeholder="Hours"
                   value={inputHours}
                   onChange={(e) => setInputHours(Number(e.target.value))}
                   min="0"
                 />
-                <label>Minutes: </label>
                 <input
                   type="number"
+                  placeholder="Minutes"
                   value={inputMinutes}
                   onChange={(e) => setInputMinutes(Number(e.target.value))}
                   min="0"
