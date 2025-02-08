@@ -81,7 +81,7 @@ input {
     text-align: center;
 }
 
-input[type="number"] {
+#timer-input {
   width: 80px;
   padding: 8px;
   font-size: 16px;
