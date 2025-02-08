@@ -50,9 +50,9 @@ function Home() {
   };
 
   const reset = () => {
-    setTimeLeft(60000);
+    setTimeLeft(30000);
     setIsStarted(false);
-    setStage(0);
+    setStage(newstage);
   }
   
   // Handling time reduction logic (counts down in seconds)
@@ -184,7 +184,8 @@ function Home() {
                 <button onClick={pauseTimer}>
                   {isPaused ? "Resume" : "Pause"}
                 </button>
-                <button onClick={startTimer} disabled={isStarted}>Study!</button>
+                <button onClick={startTimer} disabled={isStarted}>Study</button>
+                <button onClick={reset}>Reset</button>
               </div>
             </div>
           </div>
