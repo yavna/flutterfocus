@@ -128,7 +128,6 @@ function Home() {
                   {isPaused ? "Resume" : "Pause"}
                 </button>
                 <button onClick={nextStage}>Start</button>
-              <Link to="/home"><button>Back</button></Link>
               </div>
             </div>
           </div>
@@ -137,7 +136,6 @@ function Home() {
           <h2 style={{ marginTop: '5px'}}>Garden</h2>
           <button onClick={addButterfly}>Release butterly collection</button>
           <div>{butterflies.map((b, i) => <span key={i}>{b}</span>)}</div>
-          <Link to="/home"><button>Back</button></Link>
         </div>
       </div>
     </div>
