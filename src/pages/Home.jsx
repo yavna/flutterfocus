@@ -219,7 +219,7 @@ function Home() {
                 <button className="internalButton" onClick={updateTimer}>Set Timer</button>
               </div>
               <div>
-                <p>Time Left: {formatTime(timeLeft)}</p>
+                <h4>Time Left: {formatTime(timeLeft)}</h4>
                 <button className="internalButton" onClick={pauseTimer}>
                   {isPaused ? "Resume" : "Pause"}
                 </button>
