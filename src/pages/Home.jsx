@@ -164,7 +164,8 @@ function Home() {
                   
           <div className={toggle === 1 ? "showContent" : "tabcontent"}>
             <h2>Study Calendar</h2>
-            <input
+            <input 
+              className="study-input"
               type="text"
               placeholder="Exam Name"
               value={examName}
@@ -172,12 +173,14 @@ function Home() {
             />
             <input
               type="number"
+              className="study-input"
               placeholder="Hours per day"
               value={hoursPerDay}
               onChange={(e) => setHoursPerDay(e.target.value)}
             />
             <input
               type="date"
+              className="study-input"
               value={examDate}
               onChange={(e) => setExamDate(e.target.value)}
             />
@@ -195,9 +198,11 @@ function Home() {
 
             <div className={toggle === 2 ? "showContent" : "tabcontent"}>
               <h2>Study Now</h2>
-              <motion.div animate={{ scale: 1.2 }} transition={{ duration: 0.5 }}>
-                <p>{stages[stage]}</p>
-              </motion.div>
+              <div className="centered-container">
+                <motion.div animate={{ scale: 1.2 }} transition={{ duration: 0.5 }}>
+                  <p>{stages[stage]}</p>
+                </motion.div>
+              </div>
               {/* Timer Input Section */}
               <div>
                 <h2>Set Timer</h2>
@@ -221,7 +226,9 @@ function Home() {
                 <button className="internalButton" onClick={updateTimer}>Set Timer</button>
               </div>
               <div>
-                <h4>Time Left: {formatTime(timeLeft)}</h4>
+                
+                  <h4>Time Left: <div className="time-left-container"><h1>{formatTime(timeLeft)}</h1></div></h4>
+                
                 <button className="internalButton" onClick={pauseTimer}>
                   {isPaused ? "Resume" : "Pause"}
                 </button>

@@ -67,11 +67,38 @@
     text-align: center;
 }
 
+.centered-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+input {
+  border-radius: 8px;
+}
+
 #timer-input {
   width: 80px;
   padding: 8px;
   font-size: 16px;
   margin: 5px;
+}
+
+.study-input {
+  width: 120px;
+  padding: 8px;
+  font-size: 16px;
+  margin: 5px;
+}
+
+.time-left-container {
+  background-color: rgb(240, 190, 197);
+  padding: 8px;
+  border-radius: 8px;
+  margin: 5 px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 
