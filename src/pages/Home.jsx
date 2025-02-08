@@ -76,9 +76,6 @@ function Home() {
       <h1>Flutter Focus</h1>
       <div className="blocks">
         <div className="block">
-          <Link to="/calendar"><button>Calendar</button></Link>
-          <Link to="/study"><button>Study Now</button></Link>
-          <Link to="/garden"><button>Garden</button></Link>
           <div className="tab">
             <button className="tablinks" onClick={() => openTab('Tab1')}>Calendar</button>
             <button className="tablinks" onClick={() => openTab('Tab2')}>Study</button>
