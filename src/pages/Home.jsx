@@ -97,12 +97,15 @@ function Home() {
 
   // butterfly info
   const [butterflies, setButterflies] = useState([]);
-  const [isButtonClicked, setIsButtonClicked] = useState(false);const addButterfly = () => {
-    for (let index = 0; index < butterflyCounter; index++) {
+  const [isButtonClicked, setIsButtonClicked] = useState(false);
+  
+  const addButterfly = () => {
+    for (let index = 0; index < window.butterflyCounter; index++) {
       setButterflies((prevButterflies) => [...prevButterflies, "🦋"]);
     }
     setIsButtonClicked(true);
   };
+
 
   const generateStudyPlan = async () => {
     if (!selectedExam) {
@@ -184,7 +187,7 @@ function Home() {
               value={examDate}
               onChange={(e) => setExamDate(e.target.value)}
             />
-            <button onClick={addExam}>Add Exam</button>
+            <button style={{marginLeft: '10px'}} onClick={addExam}>Add Exam</button>
 
             <ul>
             {exams.map((exam, index) => (
@@ -246,18 +249,16 @@ function Home() {
       </div>
 
       <div className="study-plan">
-        <h2>Generated Study Plan</h2>
+        <h2 style={{marginLeft: '30px'}}>Generated Study Plan</h2>
         {studyPlan ? (
           <div className="study-plan-box">
             <pre style={{ whiteSpace: "pre-wrap" }}>{studyPlan}</pre>
         </div> 
         ) : (
-          <p>No study plan generated yet. Please add an exam and click Generate Study Plan.</p>
+          <p style={{marginLeft: '30px'}}>No study plan generated yet. Please add an exam and click Generate Study Plan.</p>
         )}
-        {selectedExam && (
-          <p><strong>Selected Exam:</strong> {selectedExam.name} on {format(new Date(selectedExam.date), "PP")}</p>
-        )}
-        <button onClick={generateStudyPlan}>Generate Study Plan</button>
+        <button style={{marginBottom: '40px', marginLeft: '30px'}}onClick={generateStudyPlan}>Generate Study Plan</button>
+
       </div>
     </div>
   );
