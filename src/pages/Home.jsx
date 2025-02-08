@@ -200,7 +200,7 @@ function Home() {
         <h2>Generated Study Plan</h2>
         {studyPlan ? (
           <div className="study-plan-box">
-          <pre>{studyPlan}</pre>
+            <pre style={{ whiteSpace: "pre-wrap" }}>{studyPlan}</pre>
         </div> 
         ) : (
           <p>No study plan generated yet. Please add an exam and click Generate Study Plan.</p>
