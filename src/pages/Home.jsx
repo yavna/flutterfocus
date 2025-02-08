@@ -124,12 +124,10 @@ function Home() {
   
   
   // tab handling
-  const [activeTab, setActiveTab] = useState('default');
-  const handleTabClick = (tabId) => {
-    if (tabId !== 'default') {
-      setActiveTab(tabId);
-    }
-  };  
+  const [toggle, setToggle] = useState(1);
+  function handleTabClick(id) {
+    setToggle(id)
+  }
 
   return (
     <div className="home">
@@ -137,48 +135,45 @@ function Home() {
       <div className="blocks">
         <div className="block mainBlock">
           <div className="tabButton">
-            <button className="tablinks" onClick={() => handleTabClick('Tab1')}>Calendar</button>
-            <button className="tablinks" onClick={() => handleTabClick('Tab2')}>Study</button>
+            <button className="tablinks" onClick={() => handleTabClick(1)}>Calendar</button>
+            <button className="tablinks" onClick={() => handleTabClick(2)}>Study</button>
           </div>
-          <div id="Tab1" className="tabcontent">
-            <div className={`tab ${activeTab === 'Tab1' ? 'active' : ''}`}>
-                  <h2>Study Calendar</h2>
-                  <input
-                    type="text"
-                    placeholder="Exam Name"
-                    value={examName}
-                    onChange={(e) => setExamName(e.target.value)}
-                  />
-                  <input
-                  type="number"
-                  placeholder="Hours per day"
-                  value={hoursPerDay}
-                  onChange={(e) => setHoursPerDay(e.target.value)}
-/>
-                  <input
-                    type="date"
-                    value={examDate}
-                    onChange={(e) => setExamDate(e.target.value)}
-                  />
-                  <button onClick={addExam}>Add Exam</button>
-            
-                  <ul>
-                    {exams.map((exam, index) => (
-                      <li key={index}>
-                        {exam.name} - {format(new Date(exam.date), "PP")}
-                      </li>
-                    ))}
-                  </ul>
-              </div>
-          </div>
+          <div className={toggle === 1 ? "showContent" : "tabcontent"}>
+            <h2>Study Calendar</h2>
+            <input
+              type="text"
+              placeholder="Exam Name"
+              value={examName}
+              onChange={(e) => setExamName(e.target.value)}
+            />
+            <input
+            type="number"
+            placeholder="Hours per day"
+            value={hoursPerDay}
+            onChange={(e) => setHoursPerDay(e.target.value)}
+            />
+            <input
+              type="date"
+              value={examDate}
+              onChange={(e) => setExamDate(e.target.value)}
+            />
+            <button onClick={addExam}>Add Exam</button>
+      
+            <ul>
+              {exams.map((exam, index) => (
+                <li key={index}>
+                  {exam.name} - {format(new Date(exam.date), "PP")}
+                </li>
+              ))}
+            </ul>
+            </div>
 
-          <div id="Tab2" className="tabcontent">
-            <div className={`tab ${activeTab === 'Tab2' ? 'active' : ''}`}>
+            <div className={toggle === 2 ? "showContent" : "tabcontent"}>
               <h2>Study Now</h2>
               <motion.div animate={{ scale: 1.2 }} transition={{ duration: 0.5 }}>
                 <p>{stages[stage]}</p>
               </motion.div>
-              
+          
               <div>
                 <p>Time Left: {formatTime(timeLeft)}</p>
                 <button onClick={pauseTimer}>
@@ -188,14 +183,15 @@ function Home() {
                 <button onClick={reset}>Reset</button>
               </div>
             </div>
-          </div>
         </div>
+
         <div className="block">
           <h2 style={{ marginTop: '5px'}}>Garden</h2>
           <button onClick={addButterfly}>Release butterfly collection</button>
           <div>{butterflies.map((b, i) => <span key={i}>{b}</span>)}</div>
         </div>
       </div>
+
       <div className="study-plan">
         <h2>Generated Study Plan</h2>
         {studyPlan ? (
@@ -211,18 +207,4 @@ function Home() {
   );
 }
 
-function openTab(tabName) {
-  const tabcontent = document.getElementsByClassName("tabcontent");
-  for (let i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
-
-  const tablinks = document.getElementsByClassName("tablinks");
-  for (let i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" active", "");
-  }
-
-  document.getElementById(tabName).style.display = "block";
-  event.currentTarget.className += " active";
-}
-export default Home;
+export default Home
