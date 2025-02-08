@@ -50,19 +50,20 @@ function Home() {
   };
 
   const stages = [Caterpillar(), Cocoon(), Butterfly(), "You've earned a butterfly!"];
-  const defaultTotalTime = 60000 * 0.5; // 1 minute = 60,000 ms
-  const stageTime = defaultTotalTime / stages.length;
+  const [inputHours, setInputHours] = useState(""); // Hours input
+  const [inputMinutes, setInputMinutes] = useState(""); // Minutes input
+  const totalTime = (inputHours * 3600000) + (inputMinutes * 60000); // 1 minute = 60,000 ms
+  const stageTime = totalTime / stages.length;
 
   const [stage, setStage] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(defaultTotalTime); 
+  const [timeLeft, setTimeLeft] = useState(totalTime); 
   const [isPaused, setIsPaused] = useState(false); // To control the pause state
   const [isStarted, setIsStarted] = useState(false); // To control if timer is started or not
   const [studyPlan, setStudyPlan] = useState("");
   const [hoursPerDay, setHoursPerDay] = useState("");
   const [selectedExam, setSelectedExam] = useState(null);
 
-  const [inputHours, setInputHours] = useState(""); // Hours input
-  const [inputMinutes, setInputMinutes] = useState(""); // Minutes input
+  
 
   const startTimer = () => {
     setIsStarted(true);
@@ -79,7 +80,7 @@ function Home() {
   };
 
   const reset = () => {
-    setTimeLeft(defaultTotalTime);
+    setTimeLeft(totalTime);
     setIsStarted(false);
     setStage(newstage);
   }
@@ -103,10 +104,12 @@ function Home() {
       handleComplete();
     }
 
-    const newStage = Math.floor((defaultTotalTime - timeLeft) / stageTime);
-    if (newStage !== stage && newStage < stages.length) {
+    const newStage = Math.floor((totalTime - timeLeft) / (totalTime
+       / 3));
+    if (newStage !== stage && newStage < 4) {
       setStage(newStage);
     }
+
 
     return () => clearInterval(interval);
   }, [isPaused, timeLeft, isStarted, stage]);
@@ -125,7 +128,7 @@ function Home() {
   const [isButtonClicked, setIsButtonClicked] = useState(false);
   
   const addButterfly = () => {
-    for (let index = 0; index < window.butterflyCounter; index++) {
+    for (let index = 0; index < window.butterflyCounter/2; index++) {
       setButterflies((prevButterflies) => [...prevButterflies, "🦋"]);
     }
     setIsButtonClicked(true);
