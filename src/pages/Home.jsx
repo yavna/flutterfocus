@@ -53,7 +53,7 @@ function Home() {
     }
   
     const replacements = {
-      day: 'Day',
+      day: '\nDay',
       practiceProblems: 'Practice Problems',
       studyTopics: 'Study Topics',
       breakTimes: 'Break Times',
@@ -95,6 +95,8 @@ function Home() {
       DayTips : 'Day Tips',
       problemSolving : 'Problem Solving',
       dailySchedule : 'Daily Schedule',
+      overallRevision : 'Overall Revision',
+      DaysLeft : 'Days Left',
     };
   
 
@@ -107,7 +109,7 @@ function Home() {
     };
 
     const removeHeaders = (str) => {
-      const headerRegex = /"examName":.*?,|"examDate":.*?,|"hoursPerDay":.*?,/g;
+      const headerRegex = /"examName":.*?,|"examDate":.*?,|"hoursPerDay":.*?,|"DaysLeft":.*?/g;
       return str.replace(headerRegex, '');
     };
 
