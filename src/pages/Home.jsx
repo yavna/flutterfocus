@@ -286,17 +286,80 @@ function Home() {
   const [isButtonClicked, setIsButtonClicked] = useState(false);
   
   const addButterfly = () => {
-    for (let index = 0; index < window.butterflyCounter/2-1; index++) {
-      setButterflies((prevButterflies) => [...prevButterflies, "🦋"]);
+    // Set up butterflies with random positions and random animation durations
+    const newButterflies = [];
+    
+    for (let index = 0; index < (window.butterflyCounter-2)/2; index++) {
+      // Random horizontal and vertical positions
+      const randomX = Math.random() * (1000 - 999.9) + (999.9); // Horizontal position between 0 and 500px
+      const randomY = Math.random() * (600 - 500) + 500; // Vertical position between 0 and 500px
+      
+      // Random animation duration between 2s and 4s
+      const randomDuration = Math.random() * 2 + 2; // e.g., 2s to 4s
+      
+      newButterflies.push(
+        <div
+          key={index}
+          className="butterfly"
+          style={{
+            position: "absolute",
+            left: `${randomX}px`,
+            top: `${randomY}px`,
+            animation: `flyAround ${randomDuration}s infinite`,
+          }}
+        >
+          🦋
+        </div>
+      );
     }
+  
+    setButterflies(newButterflies);
     setIsButtonClicked(true);
+  
+    // Clear butterflies after a while (e.g., 3 seconds)
     setTimeout(() => {
       setButterflies([]); // Clear butterflies after 3 seconds (or any desired duration)
-    }, 1000);
+    }, 3000); // This should match the flying duration
+  };
+
+  const generateStudyPlan = async () => {
+    if (!selectedExam) {
+      alert("Please select an exam first.");
+      return;
+    }
+
+    try {
+      console.log("Sending request to backend...");
+      
+      const response = await fetch("http://localhost:5000/api/generate-study-plan", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          examName: selectedExam.name,
+          examDate: selectedExam.date,
+          hoursPerDay,
+        }),
+      });
+  
+      console.log("Response received:", response);
+  
+      if (!response.ok) {
+        console.error("Failed to generate study plan. Response:", response);
+        return;
+      }
+  
+      const data = await response.json();
+      console.log("Study Plan Data:", data);
+      setStudyPlan(data.studyPlan.replace(/\n/g, "<br/>"));
+    } catch (error) {
+      console.error("Error fetching study plan:", error);
+    }
+    <div className="study-plan-box" dangerouslySetInnerHTML={{ __html: studyPlan }} />
   };
   
-    
-  // tab handling
+
   const [toggle, setToggle] = useState(1);
   function handleTabClick(id) {
     setToggle(id)

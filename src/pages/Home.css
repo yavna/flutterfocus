@@ -154,3 +154,28 @@ input {
     border-top: none; 
   }
   */
+
+/* Add to your Home.css */
+.butterfly {
+  position: absolute;
+  animation: flyAround 5s ease-in-out infinite;
+  transition: transform 1s ease;
+}
+
+@keyframes flyAround {
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(100px, -200px);
+  }
+  50% {
+    transform: translate(-100px, 200px);
+  }
+  75% {
+    transform: translate(200px, 200px);
+  }
+  100% {
+    transform: translate(-150px, -200px);
+  }
+}
