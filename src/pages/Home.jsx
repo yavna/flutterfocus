@@ -29,7 +29,7 @@ function Home() {
   const [isPaused, setIsPaused] = useState(false); // To control the pause state
   const [isStarted, setIsStarted] = useState(false); // To control if timer is started or not
 
-  const stages = ["🐛", "🟡 Cocoon", "🦋 Butterfly"];
+  const stages = ["🐛", "🟡", "🦋 You've earned a butterfly!"];
 
   const nextStage = () => {
     if (!isStarted) {
@@ -46,6 +46,12 @@ function Home() {
     setStage(stage + 1);
     setTimeLeft(60000); // Reset time (optional)
   };
+
+  const reset = () => {
+    setTimeLeft(60000);
+    setIsStarted(false);
+    setStage(0);
+  }
   
   // Handling time reduction logic (counts down in seconds)
   useEffect(() => {
@@ -82,9 +88,6 @@ function Home() {
       <h1>Flutter Focus</h1>
       <div className="blocks">
         <div className="block mainBlock">
-          <Link to="/calendar"><button>Calendar</button></Link>
-          <Link to="/study"><button>Study Now</button></Link>
-          <Link to="/garden"><button>Garden</button></Link>
           <div className="tabButton">
             <button className="tablinks" onClick={() => handleTabClick('Tab1')}>Calendar</button>
             <button className="tablinks" onClick={() => handleTabClick('Tab2')}>Study</button>
@@ -128,6 +131,7 @@ function Home() {
                   {isPaused ? "Resume" : "Pause"}
                 </button>
                 <button onClick={nextStage}>Start</button>
+                <button onClick={reset}>Reset</button>
               </div>
             </div>
           </div>
