@@ -25,15 +25,18 @@ function Home() {
   };
 
   const stages = ["🐛", "🟡 Cocoon", "🦋 Butterfly"];
-  const totalTime = 60000 * .5; // 1 minute = 60,000 ms
-  const stageTime = totalTime / stages.length;
+  const defaultTotalTime = 60000 * 0.5; // 1 minute = 60,000 ms
+  const stageTime = defaultTotalTime / stages.length;
 
   const [stage, setStage] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(totalTime); 
+  const [timeLeft, setTimeLeft] = useState(defaultTotalTime); 
   const [isPaused, setIsPaused] = useState(false); // To control the pause state
   const [isStarted, setIsStarted] = useState(false); // To control if timer is started or not
   const [studyPlan, setStudyPlan] = useState("");
   const [hoursPerDay, setHoursPerDay] = useState("");
+
+  const [inputHours, setInputHours] = useState(0); // Hours input
+  const [inputMinutes, setInputMinutes] = useState(0); // Minutes input
 
   const startTimer = () => {
     setIsStarted(true);
@@ -50,10 +53,18 @@ function Home() {
   };
 
   const reset = () => {
-    setTimeLeft(30000);
+    setTimeLeft(defaultTotalTime);
     setIsStarted(false);
     setStage(newstage);
   }
+
+  // User input timer
+  const updateTimer = () => {
+    const newTimeLeft = (inputHours * 3600000) + (inputMinutes * 60000); // Convert hours and minutes to milliseconds
+    setTimeLeft(newTimeLeft);
+    setIsStarted(false); // Reset timer state to not started
+    setStage(0); // Reset stage
+  };
   
   // Handling time reduction logic (counts down in seconds)
   useEffect(() => {
@@ -66,7 +77,7 @@ function Home() {
       handleComplete();
     }
 
-    const newStage = Math.floor((totalTime - timeLeft) / stageTime);
+    const newStage = Math.floor((defaultTotalTime - timeLeft) / stageTime);
     if (newStage !== stage && newStage < stages.length) {
       setStage(newStage);
     }
@@ -74,11 +85,13 @@ function Home() {
     return () => clearInterval(interval);
   }, [isPaused, timeLeft, isStarted, stage]);
 
-  // Format timeLeft into MM:SS
+  // Format timeLeft into HH:MM:SS
   const formatTime = (ms) => {
-    const minutes = Math.floor(ms / 60000);
-    const seconds = Math.floor((ms % 60000) / 1000);
-    return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+    const hours = Math.floor(ms / 3600000); // Calculate hours
+    const minutes = Math.floor((ms % 3600000) / 60000); // Calculate minutes
+    const seconds = Math.floor((ms % 60000) / 1000); // Calculate seconds
+
+    return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
   };
 
   // butterfly info
@@ -173,7 +186,26 @@ function Home() {
               <motion.div animate={{ scale: 1.2 }} transition={{ duration: 0.5 }}>
                 <p>{stages[stage]}</p>
               </motion.div>
-          
+              {/* Timer Input Section */}
+              <div>
+                <h2>Set Timer</h2>
+                <label>Hours: </label>
+                <input
+                  type="number"
+                  value={inputHours}
+                  onChange={(e) => setInputHours(Number(e.target.value))}
+                  min="0"
+                />
+                <label>Minutes: </label>
+                <input
+                  type="number"
+                  value={inputMinutes}
+                  onChange={(e) => setInputMinutes(Number(e.target.value))}
+                  min="0"
+                  max="59"
+                />
+                <button onClick={updateTimer}>Set Timer</button>
+              </div>
               <div>
                 <p>Time Left: {formatTime(timeLeft)}</p>
                 <button onClick={pauseTimer}>
