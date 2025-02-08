@@ -320,8 +320,7 @@ function Home() {
     setTimeout(() => {
       setButterflies([]); // Clear butterflies after 3 seconds (or any desired duration)
     }, 3000); // This should match the flying duration
-  };
-
+  };  
 
   const [toggle, setToggle] = useState(1);
   function handleTabClick(id) {
