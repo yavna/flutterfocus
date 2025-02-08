@@ -23,14 +23,13 @@ function Home() {
       const stages = ["🐛", "🟡 Cocoon", "🦋 Butterfly"];
     
       const nextStage = () => {
-        if (stage < stages.length - 1) {
-          setStage(stage + 1);
-          setIsStarted(true); // Start the timer when stage button is clicked
-        }
+        if (!isStarted) {
+          setIsStarted(true);
+        } // Start the timer when stage button is clicked
       };
     
       const togglePause = () => {
-        setIsPaused(!isPaused);
+        setIsPaused(prev => !prev);
       };
     
       // Handling countdown completion
@@ -46,8 +45,8 @@ function Home() {
           interval = setInterval(() => {
             setTimeLeft(prev => prev - 1000); // Reduce 1 second (1000 ms)
           }, 1000);
-        } else {
-          clearInterval(interval);
+        } if (timeLeft === 30000 || timeLeft === 0) {
+          setStage(prevStage => Math.min(prevStage + 1, stages.length - 1));
         }
         return () => clearInterval(interval); // Cleanup on component unmount
       }, [isPaused, timeLeft, isStarted]);
@@ -99,10 +98,9 @@ function Home() {
             <button onClick={togglePause}>
               {isPaused ? "Resume" : "Pause"}
             </button>
-          </div>
-
-          <button onClick={nextStage}>Study!</button>
+            <button onClick={nextStage}>Start</button>
           <Link to="/home"><button>Back</button></Link>
+          </div>
         </div>
       </div>
     </div>
