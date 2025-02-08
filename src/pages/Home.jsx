@@ -30,6 +30,7 @@ function Butterfly() {
   );
 }
 
+
 window.butterflyCounter = window.butterflyCounter || 0;
 
 function incrementCounter() {
@@ -421,6 +422,9 @@ function Home() {
         <div className="block">
           <h2 style={{ marginTop: '5px'}}>Garden</h2>
           <button onClick={addButterfly}>Release butterfly collection</button>
+          <div>
+            <img src="/assets/tulips.jpg" alt="Tulips" style={{ width: '300px', height: 'auto', marginTop: '250px'}} />
+          </div>
           <div>{butterflies.map((b, i) => <span key={i}>{b}</span>)}</div>
         </div>
       </div>
