@@ -322,43 +322,6 @@ function Home() {
     }, 3000); // This should match the flying duration
   };
 
-  const generateStudyPlan = async () => {
-    if (!selectedExam) {
-      alert("Please select an exam first.");
-      return;
-    }
-
-    try {
-      console.log("Sending request to backend...");
-      
-      const response = await fetch("http://localhost:5000/api/generate-study-plan", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          examName: selectedExam.name,
-          examDate: selectedExam.date,
-          hoursPerDay,
-        }),
-      });
-  
-      console.log("Response received:", response);
-  
-      if (!response.ok) {
-        console.error("Failed to generate study plan. Response:", response);
-        return;
-      }
-  
-      const data = await response.json();
-      console.log("Study Plan Data:", data);
-      setStudyPlan(data.studyPlan.replace(/\n/g, "<br/>"));
-    } catch (error) {
-      console.error("Error fetching study plan:", error);
-    }
-    <div className="study-plan-box" dangerouslySetInnerHTML={{ __html: studyPlan }} />
-  };
-  
 
   const [toggle, setToggle] = useState(1);
   function handleTabClick(id) {
