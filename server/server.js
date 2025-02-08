@@ -1,8 +1,17 @@
 import express from "express";
 import cors from "cors";
-import "dotenv/config"; 
+import dotenv from "dotenv"; 
+import path from "path";
 import { env } from "node:process";
 import { GoogleGenerativeAI, SchemaType } from "@google/generative-ai";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+dotenv.config({ path: path.resolve(__dirname, "./.env") });
 
 const app = express();
 app.use(express.json());
@@ -31,6 +40,8 @@ const model = genAI.getGenerativeModel({
   },
 });
 
+app.use(express.static(path.join(__dirname, "dist")));
+
 app.post("/api/generate-study-plan", async (req, res) => {
     const { examName, examDate, hoursPerDay } = req.body;
   
@@ -56,6 +67,10 @@ app.post("/api/generate-study-plan", async (req, res) => {
       res.status(500).json({ error: "Failed to generate study plan." });
     }
   });
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "dist", "index.html"));
+});
   
 
 const PORT = 5000;
