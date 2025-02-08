@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Countdown from 'react-countdown';
+import { Link } from "react-router-dom";
 
 function StudyNow() {
   const [stage, setStage] = useState(0);
@@ -54,7 +55,8 @@ function StudyNow() {
         </button>
       </div>
 
-      <button onClick={nextStage}>Next Stage</button>
+      <button onClick={nextStage}>Study!</button>
+      <Link to="/home"><button>Back</button></Link>
     </div>
   );
 }
