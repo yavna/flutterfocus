@@ -13,10 +13,14 @@ input {
 }
 
 .block {
-    background-color: #ccd5ae;
+    background-color: #F9E1DD;
     border-radius: 25px;
     padding: 25px;
     margin: 25px;
+}
+
+.blockBottom {
+    background-color: #ffe99b;
 }
 
 .blocks {
@@ -30,6 +34,7 @@ input {
 .mainBlock {
     min-width: 40vw;
     min-height: 50vh;
+    background-color: #ccd5ae;
 }
 
 .showContent {

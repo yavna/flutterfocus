@@ -248,7 +248,7 @@ function Home() {
         </div>
       </div>
 
-      <div className="study-plan">
+      <div className="study-plan blockBottom block">
         <h2 style={{marginLeft: '30px'}}>Generated Study Plan</h2>
         {studyPlan ? (
           <div className="study-plan-box">
