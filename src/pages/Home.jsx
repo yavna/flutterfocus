@@ -25,16 +25,19 @@ function Home() {
   };
 
   const stages = ["🐛", "🟡 Cocoon", "🦋 Butterfly"];
-  const totalTime = 60000 * .5; // 1 minute = 60,000 ms
-  const stageTime = totalTime / stages.length;
+  const defaultTotalTime = 60000 * 0.5; // 1 minute = 60,000 ms
+  const stageTime = defaultTotalTime / stages.length;
 
   const [stage, setStage] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(totalTime); 
+  const [timeLeft, setTimeLeft] = useState(defaultTotalTime); 
   const [isPaused, setIsPaused] = useState(false); // To control the pause state
   const [isStarted, setIsStarted] = useState(false); // To control if timer is started or not
   const [studyPlan, setStudyPlan] = useState("");
   const [hoursPerDay, setHoursPerDay] = useState("");
   const [selectedExam, setSelectedExam] = useState(null);
+
+  const [inputHours, setInputHours] = useState(""); // Hours input
+  const [inputMinutes, setInputMinutes] = useState(""); // Minutes input
 
   const startTimer = () => {
     setIsStarted(true);
@@ -51,10 +54,18 @@ function Home() {
   };
 
   const reset = () => {
-    setTimeLeft(30000);
+    setTimeLeft(defaultTotalTime);
     setIsStarted(false);
     setStage(newstage);
   }
+
+  // User input timer
+  const updateTimer = () => {
+    const newTimeLeft = (inputHours * 3600000) + (inputMinutes * 60000); // Convert hours and minutes to milliseconds
+    setTimeLeft(newTimeLeft);
+    setIsStarted(false); // Reset timer state to not started
+    setStage(0); // Reset stage
+  };
   
   // Handling time reduction logic (counts down in seconds)
   useEffect(() => {
@@ -67,7 +78,7 @@ function Home() {
       handleComplete();
     }
 
-    const newStage = Math.floor((totalTime - timeLeft) / stageTime);
+    const newStage = Math.floor((defaultTotalTime - timeLeft) / stageTime);
     if (newStage !== stage && newStage < stages.length) {
       setStage(newStage);
     }
@@ -75,20 +86,22 @@ function Home() {
     return () => clearInterval(interval);
   }, [isPaused, timeLeft, isStarted, stage]);
 
-  // Format timeLeft into MM:SS
+  // Format timeLeft into HH:MM:SS
   const formatTime = (ms) => {
-    const minutes = Math.floor(ms / 60000);
-    const seconds = Math.floor((ms % 60000) / 1000);
-    return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+    const hours = Math.floor(ms / 3600000); // Calculate hours
+    const minutes = Math.floor((ms % 3600000) / 60000); // Calculate minutes
+    const seconds = Math.floor((ms % 60000) / 1000); // Calculate seconds
+
+    return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
   };
 
   // butterfly info
   const [butterflies, setButterflies] = useState([]);
-
-  const addButterfly = () => {
-    for (let index = 0; index < butterflyCounter; index++){
-      setButterflies([...butterflies, "🦋"]);
+  const [isButtonClicked, setIsButtonClicked] = useState(false);const addButterfly = () => {
+    for (let index = 0; index < butterflyCounter; index++) {
+      setButterflies((prevButterflies) => [...prevButterflies, "🦋"]);
     }
+    setIsButtonClicked(true);
   };
 
   const generateStudyPlan = async () => {
@@ -130,12 +143,10 @@ function Home() {
   
   
   // tab handling
-  const [activeTab, setActiveTab] = useState('default');
-  const handleTabClick = (tabId) => {
-    if (tabId !== 'default') {
-      setActiveTab(tabId);
-    }
-  };  
+  const [toggle, setToggle] = useState(1);
+  function handleTabClick(id) {
+    setToggle(id)
+  }
 
   const handleSelectExam = (index) => {
     setSelectedExam(exams[index]); // Ensure it pulls from the exams state
@@ -143,70 +154,88 @@ function Home() {
 
   return (
     <div className="home">
-      <h1>Flutter Focus</h1>
+      <h1 className="title">Flutter Focus</h1>
       <div className="blocks">
         <div className="block mainBlock">
           <div className="tabButton">
-            <button className="tablinks" onClick={() => handleTabClick('Tab1')}>Calendar</button>
-            <button className="tablinks" onClick={() => handleTabClick('Tab2')}>Study</button>
+            <button className="tablinks" onClick={() => handleTabClick(1)}>Calendar</button>
+            <button className="tablinks" onClick={() => handleTabClick(2)}>Study</button>
           </div>
-          <div id="Tab1" className="tabcontent">
-            <div className={`tab ${activeTab === 'Tab1' ? 'active' : ''}`}>
-                  <h2>Study Calendar</h2>
-                  <input
-                    type="text"
-                    placeholder="Exam Name"
-                    value={examName}
-                    onChange={(e) => setExamName(e.target.value)}
-                  />
-                  <input
-                  type="number"
-                  placeholder="Hours per day"
-                  value={hoursPerDay}
-                  onChange={(e) => setHoursPerDay(e.target.value)}
-/>
-                  <input
-                    type="date"
-                    value={examDate}
-                    onChange={(e) => setExamDate(e.target.value)}
-                  />
-                  <button onClick={addExam}>Add Exam</button>
-            
-                  <ul>
-                  {exams.map((exam, index) => (
-                    <li key={index}>
-                      {exam.name} - {format(new Date(exam.date), "PP")}
-                      <button onClick={() => handleSelectExam(index)}>Select</button>
-                      </li>
-                  ))}
-                </ul>
-              </div>
-          </div>
+                  
+          <div className={toggle === 1 ? "showContent" : "tabcontent"}>
+            <h2>Study Calendar</h2>
+            <input
+              type="text"
+              placeholder="Exam Name"
+              value={examName}
+              onChange={(e) => setExamName(e.target.value)}
+            />
+            <input
+              type="number"
+              placeholder="Hours per day"
+              value={hoursPerDay}
+              onChange={(e) => setHoursPerDay(e.target.value)}
+            />
+            <input
+              type="date"
+              value={examDate}
+              onChange={(e) => setExamDate(e.target.value)}
+            />
+            <button onClick={addExam}>Add Exam</button>
 
-          <div id="Tab2" className="tabcontent">
-            <div className={`tab ${activeTab === 'Tab2' ? 'active' : ''}`}>
+            <ul>
+            {exams.map((exam, index) => (
+              <li key={index}>
+                {exam.name} - {format(new Date(exam.date), "PP")}
+                <button onClick={() => handleSelectExam(index)}>Select</button>
+                </li>
+            ))}
+            </ul>
+            </div>
+
+            <div className={toggle === 2 ? "showContent" : "tabcontent"}>
               <h2>Study Now</h2>
               <motion.div animate={{ scale: 1.2 }} transition={{ duration: 0.5 }}>
                 <p>{stages[stage]}</p>
               </motion.div>
-              
+              {/* Timer Input Section */}
+              <div>
+                <h2>Set Timer</h2>
+                <input
+                  type="number"
+                  placeholder="Hours"
+                  value={inputHours}
+                  onChange={(e) => setInputHours(Number(e.target.value))}
+                  min="0"
+                />
+                <input
+                  type="number"
+                  placeholder="Minutes"
+                  value={inputMinutes}
+                  onChange={(e) => setInputMinutes(Number(e.target.value))}
+                  min="0"
+                  max="59"
+                />
+                <button className="internalButton" onClick={updateTimer}>Set Timer</button>
+              </div>
               <div>
                 <p>Time Left: {formatTime(timeLeft)}</p>
-                <button onClick={pauseTimer}>
+                <button className="internalButton" onClick={pauseTimer}>
                   {isPaused ? "Resume" : "Pause"}
                 </button>
-                <button onClick={startTimer} disabled={isStarted}>Study</button>
-                <button onClick={reset}>Reset</button>
+                <button className="internalButton" onClick={startTimer} disabled={isStarted}>Study</button>
+                <button className="internalButton" onClick={reset}>Reset</button>
               </div>
             </div>
-          </div>
         </div>
+
         <div className="block">
           <h2 style={{ marginTop: '5px'}}>Garden</h2>
           <button onClick={addButterfly}>Release butterfly collection</button>
           <div>{butterflies.map((b, i) => <span key={i}>{b}</span>)}</div>
         </div>
       </div>
+
       <div className="study-plan">
         <h2>Generated Study Plan</h2>
         {studyPlan ? (
@@ -225,18 +254,4 @@ function Home() {
   );
 }
 
-function openTab(tabName) {
-  const tabcontent = document.getElementsByClassName("tabcontent");
-  for (let i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
-
-  const tablinks = document.getElementsByClassName("tablinks");
-  for (let i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" active", "");
-  }
-
-  document.getElementById(tabName).style.display = "block";
-  event.currentTarget.className += " active";
-}
-export default Home;
+export default Home

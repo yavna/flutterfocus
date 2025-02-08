@@ -9,17 +9,21 @@
     display: inline-flex;
 }
 
+.internalButton {
+    margin: 3px;
+}
+
 .mainBlock {
     min-width: 40vw;
     min-height: 50vh;
 }
 
-.tab {
-    display:none
+.showContent {
+    display: block
 }
 
-.tab.active {
-    display: block;
+.tabcontent {
+    display:none
 }
 
 .tabButton {
@@ -59,6 +63,9 @@
   max-height: 400px;  
 }
 
+.title {
+    text-align: center;
+}
 
 /* .tab {
     overflow: hidden;
