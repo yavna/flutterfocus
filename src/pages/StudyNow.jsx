@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Countdown from 'react-countdown';
 import { Link } from "react-router-dom";
+import { incrementCounter } from './Home';
 
 function StudyNow() {
   const stages = ["🐛", "🟡 Cocoon", "🦋 Butterfly"];

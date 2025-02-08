@@ -17,6 +17,7 @@ function Calendar() {
   return (
     <div>
       <h2>Study Calendar</h2>
+      <h3>Enter the exam name and date to add to the calendar</h3>
       <input
         type="text"
         placeholder="Exam Name"
@@ -28,13 +29,16 @@ function Calendar() {
         value={examDate}
         onChange={(e) => setExamDate(e.target.value)}
       />
-      <button onClick={addExam}>Add Exam</button>
       <ul>
         {exams.map((exam, index) => (
           <li key={index}>
             {exam.name} - {format(new Date(exam.date), "PP")}
           </li>
         ))}
+      </ul>
+      <button onClick={addExam}>Add Exam</button>
+      <ul>
+  
       </ul>
       <Link to="/home"><button>Back</button></Link>
     </div>
