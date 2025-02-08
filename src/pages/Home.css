@@ -8,6 +8,10 @@
   margin-bottom: 20px;
 }
 
+input { 
+  font-family: Inter, system-ui;
+}
+
 .block {
     background-color: #ccd5ae;
     border-radius: 25px;
