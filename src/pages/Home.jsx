@@ -34,6 +34,7 @@ function Home() {
   const [isStarted, setIsStarted] = useState(false); // To control if timer is started or not
   const [studyPlan, setStudyPlan] = useState("");
   const [hoursPerDay, setHoursPerDay] = useState("");
+  const [selectedExam, setSelectedExam] = useState(null);
 
   const [inputHours, setInputHours] = useState(""); // Hours input
   const [inputMinutes, setInputMinutes] = useState(""); // Minutes input
@@ -107,6 +108,11 @@ function Home() {
 
 
   const generateStudyPlan = async () => {
+    if (!selectedExam) {
+      alert("Please select an exam first.");
+      return;
+    }
+
     try {
       console.log("Sending request to backend...");
       
@@ -116,8 +122,8 @@ function Home() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          examName,
-          examDate,
+          examName: selectedExam.name,
+          examDate: selectedExam.date,
           hoursPerDay,
         }),
       });
@@ -145,6 +151,10 @@ function Home() {
     setToggle(id)
   }
 
+  const handleSelectExam = (index) => {
+    setSelectedExam(exams[index]); // Ensure it pulls from the exams state
+  };
+
   return (
     <div className="home">
       <h1 className="title">Flutter Focus</h1>
@@ -154,6 +164,7 @@ function Home() {
             <button className="tablinks" onClick={() => handleTabClick(1)}>Calendar</button>
             <button className="tablinks" onClick={() => handleTabClick(2)}>Study</button>
           </div>
+                  
           <div className={toggle === 1 ? "showContent" : "tabcontent"}>
             <h2>Study Calendar</h2>
             <input
@@ -163,24 +174,25 @@ function Home() {
               onChange={(e) => setExamName(e.target.value)}
             />
             <input
-            type="number"
-            placeholder="Hours per day"
-            value={hoursPerDay}
-            onChange={(e) => setHoursPerDay(e.target.value)}
+              type="number"
+              placeholder="Hours per day"
+              value={hoursPerDay}
+              onChange={(e) => setHoursPerDay(e.target.value)}
             />
             <input
               type="date"
               value={examDate}
               onChange={(e) => setExamDate(e.target.value)}
             />
-            <button style={{marginLeft: '10px'}} onClick={addExam}>Add Exam</button>
-      
+            <button onClick={addExam}>Add Exam</button>
+
             <ul>
-              {exams.map((exam, index) => (
-                <li key={index}>
-                  {exam.name} - {format(new Date(exam.date), "PP")}
+            {exams.map((exam, index) => (
+              <li key={index}>
+                {exam.name} - {format(new Date(exam.date), "PP")}
+                <button onClick={() => handleSelectExam(index)}>Select</button>
                 </li>
-              ))}
+            ))}
             </ul>
             </div>
 
@@ -231,12 +243,13 @@ function Home() {
         <h2 style={{marginLeft: '30px'}}>Generated Study Plan</h2>
         {studyPlan ? (
           <div className="study-plan-box">
-          <pre>{studyPlan}</pre>
+            <pre style={{ whiteSpace: "pre-wrap" }}>{studyPlan}</pre>
         </div> 
         ) : (
           <p style={{marginLeft: '30px'}}>No study plan generated yet. Please add an exam and click Generate Study Plan.</p>
         )}
         <button style={{marginBottom: '40px', marginLeft: '30px'}}onClick={generateStudyPlan}>Generate Study Plan</button>
+
       </div>
     </div>
   );
