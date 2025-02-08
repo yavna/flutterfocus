@@ -182,7 +182,6 @@ function Home() {
       const data = await response.json();
       console.log("Raw Study Plan Data:", data);
   
-      // Format the study plan string
       const formattedPlan = formatStudyPlan(data.studyPlan);
       setStudyPlan(formattedPlan);
   
@@ -334,7 +333,12 @@ function Home() {
   };
 
   return (
-    <div className="home">
+    <motion.div
+      initial={{ opacity: 0, y: -50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="home"
+    >
       <h1 className="title">Flutter Focus</h1>
       <div className="blocks">
         <div className="block mainBlock">
@@ -433,16 +437,22 @@ function Home() {
         <h2 style={{marginLeft: '30px'}}>Generated Study Plan</h2>
         {studyPlan ? (
           <div className="study-plan-box">
-            <pre style={{ whiteSpace: "pre-wrap" }}>{studyPlan}</pre>
-        </div> 
+            <pre style={{ whiteSpace: "pre-wrap", textAlign: "left" }}>
+              {studyPlan.split('\n').map((line, index) => (
+                <span key={index} style={{ fontWeight: line.startsWith('Day') ? 'bold' : 'normal' }}>
+                  {line}
+                  <br />
+                </span>
+              ))}
+            </pre>
+          </div>
         ) : (
           <p style={{marginLeft: '30px'}}>No study plan generated yet. Please add an exam and click Generate Study Plan.</p>
         )}
         <button style={{marginBottom: '40px', marginLeft: '30px'}}onClick={generateStudyPlan}>Generate Study Plan</button>
-
       </div>
-    </div>
+    </motion.div>
   );
 }
 
-export default Home
+export default Home;
