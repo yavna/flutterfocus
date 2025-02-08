@@ -50,6 +50,19 @@
     border-radius: 5px 5px 0 0; 
 }
 
+.study-plan-box {
+  white-space: pre-wrap; 
+  word-wrap: break-word;  
+  overflow-wrap: break-word;  
+  max-width: 100%;  
+  overflow: auto;  
+  padding: 10px;
+  border: 1px solid #ccc;
+  background: #f9f9f9;
+  border-radius: 5px;
+  max-height: 400px;  
+}
+
 .title {
     text-align: center;
 }
