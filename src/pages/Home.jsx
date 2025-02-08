@@ -128,10 +128,13 @@ function Home() {
   const [isButtonClicked, setIsButtonClicked] = useState(false);
   
   const addButterfly = () => {
-    for (let index = 0; index < window.butterflyCounter/2; index++) {
+    for (let index = 0; index < window.butterflyCounter/2-1; index++) {
       setButterflies((prevButterflies) => [...prevButterflies, "🦋"]);
     }
     setIsButtonClicked(true);
+    setTimeout(() => {
+      setButterflies([]); // Clear butterflies after 3 seconds (or any desired duration)
+    }, 1000);
   };
 
 
