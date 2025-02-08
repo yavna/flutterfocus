@@ -32,6 +32,8 @@ function Home() {
   const [timeLeft, setTimeLeft] = useState(totalTime); 
   const [isPaused, setIsPaused] = useState(false); // To control the pause state
   const [isStarted, setIsStarted] = useState(false); // To control if timer is started or not
+  const [studyPlan, setStudyPlan] = useState("");
+  const [hoursPerDay, setHoursPerDay] = useState("");
 
   const startTimer = () => {
     setIsStarted(true);
@@ -93,6 +95,39 @@ function Home() {
     }
   };
 
+  const generateStudyPlan = async () => {
+    try {
+      console.log("Sending request to backend...");
+      
+      const response = await fetch("http://localhost:5000/api/generate-study-plan", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          examName,
+          examDate,
+          hoursPerDay,
+        }),
+      });
+  
+      console.log("Response received:", response);
+  
+      if (!response.ok) {
+        console.error("Failed to generate study plan. Response:", response);
+        return;
+      }
+  
+      const data = await response.json();
+      console.log("Study Plan Data:", data);
+      setStudyPlan(data.studyPlan.replace(/\n/g, "<br/>"));
+    } catch (error) {
+      console.error("Error fetching study plan:", error);
+    }
+    <div className="study-plan-box" dangerouslySetInnerHTML={{ __html: studyPlan }} />
+  };
+  
+  
   // tab handling
   const [activeTab, setActiveTab] = useState(null);
   const handleTabClick = (tabId) => {
@@ -103,10 +138,10 @@ function Home() {
     <div className="home">
       <h1>Flutter Focus</h1>
       <div className="blocks">
-        <div className="block mainBlock">
-          <div className="tabButton">
-            <button className="tablinks" onClick={() => handleTabClick('Tab1')}>Calendar</button>
-            <button className="tablinks" onClick={() => handleTabClick('Tab2')}>Study</button>
+        <div className="block">
+          <div className="tab">
+            <button className="tablinks" onClick={() => openTab('Tab1')}>Calendar</button>
+            <button className="tablinks" onClick={() => openTab('Tab2')}>Study</button>
           </div>
           <div id="Tab1" className="tabcontent">
             <div className={`tab ${activeTab === 'Tab1' ? 'active' : ''}`}>
@@ -117,6 +152,12 @@ function Home() {
                     value={examName}
                     onChange={(e) => setExamName(e.target.value)}
                   />
+                  <input
+                  type="number"
+                  placeholder="Hours per day"
+                  value={hoursPerDay}
+                  onChange={(e) => setHoursPerDay(e.target.value)}
+/>
                   <input
                     type="date"
                     value={examDate}
@@ -156,6 +197,17 @@ function Home() {
           <button onClick={addButterfly}>Release butterly collection</button>
           <div>{butterflies.map((b, i) => <span key={i}>{b}</span>)}</div>
         </div>
+      </div>
+      <div className="study-plan">
+        <h2>Generated Study Plan</h2>
+        {studyPlan ? (
+          <div className="study-plan-box">
+          <pre>{studyPlan}</pre>
+        </div> 
+        ) : (
+          <p>No study plan generated yet. Please add an exam and click Generate Study Plan.</p>
+        )}
+        <button onClick={generateStudyPlan}>Generate Study Plan</button>
       </div>
     </div>
   );
