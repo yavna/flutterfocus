@@ -4,6 +4,31 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import './Home.css'
 import Countdown from 'react-countdown';
+import React from 'react';
+
+function Caterpillar() {
+  return (
+    <div>
+      <img src="/assets/caterpillar.jpg" alt="Caterpillar" style={{ width: '100px', height: 'auto' }} />
+    </div>
+  );
+}
+
+function Cocoon() {
+  return (
+    <div>
+      <img src="/assets/cocoon.jpg" alt="Cocoon" style={{ width: '100px', height: 'auto' }} />
+    </div>
+  );
+}
+
+function Butterfly() {
+  return (
+    <div>
+      <img src="/assets/butterfly.jpg" alt="Butterfly" style={{ width: '100px', height: 'auto' }} />
+    </div>
+  );
+}
 
 window.butterflyCounter = window.butterflyCounter || 0;
 
@@ -24,7 +49,7 @@ function Home() {
     setExamDate("");
   };
 
-  const stages = ["🐛", "🟡 Cocoon", "🦋 Butterfly"];
+  const stages = [Caterpillar(), Cocoon(), Butterfly(), "You've earned a butterfly!"];
   const defaultTotalTime = 60000 * 0.5; // 1 minute = 60,000 ms
   const stageTime = defaultTotalTime / stages.length;
 
