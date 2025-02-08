@@ -40,18 +40,13 @@ function Home() {
     setIsPaused(false);
   };
 
-  const nextStage = () => {
-    if (!isStarted) {
-      setIsStarted(true);
-    } // Start the timer when stage button is clicked
-  };
-
   const pauseTimer = () => {
     setIsPaused(prev => !prev);
   };
 
   const handleComplete = () => {
     console.log("Time's up");
+    incrementCounter();
   };
 
   const reset = () => {
@@ -196,7 +191,7 @@ function Home() {
         </div>
         <div className="block">
           <h2 style={{ marginTop: '5px'}}>Garden</h2>
-          <button onClick={addButterfly}>Release butterly collection</button>
+          <button onClick={addButterfly}>Release butterfly collection</button>
           <div>{butterflies.map((b, i) => <span key={i}>{b}</span>)}</div>
         </div>
       </div>
