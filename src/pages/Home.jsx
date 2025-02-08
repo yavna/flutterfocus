@@ -181,7 +181,7 @@ function Home() {
               value={examDate}
               onChange={(e) => setExamDate(e.target.value)}
             />
-            <button onClick={addExam}>Add Exam</button>
+            <button style={{marginLeft: '10px'}} onClick={addExam}>Add Exam</button>
 
             <ul>
             {exams.map((exam, index) => (
