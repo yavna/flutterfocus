@@ -4,7 +4,31 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import './Home.css'
 import Countdown from 'react-countdown';
-import { details } from "framer-motion/client";
+import React from 'react';
+
+function Caterpillar() {
+  return (
+    <div>
+      <img src="/assets/caterpillar.jpg" alt="Caterpillar" style={{ width: '100px', height: 'auto' }} />
+    </div>
+  );
+}
+
+function Cocoon() {
+  return (
+    <div>
+      <img src="/assets/cocoon.jpg" alt="Cocoon" style={{ width: '100px', height: 'auto' }} />
+    </div>
+  );
+}
+
+function Butterfly() {
+  return (
+    <div>
+      <img src="/assets/butterfly.jpg" alt="Butterfly" style={{ width: '100px', height: 'auto' }} />
+    </div>
+  );
+}
 
 window.butterflyCounter = window.butterflyCounter || 0;
 
@@ -182,20 +206,21 @@ function Home() {
     setExamDate("");
   };
 
-  const stages = ["🐛", "🟡 Cocoon", "🦋 Butterfly"];
-  const defaultTotalTime = 60000 * 0.5; // 1 minute = 60,000 ms
-  const stageTime = defaultTotalTime / stages.length;
+  const stages = [Caterpillar(), Cocoon(), Butterfly(), "You've earned a butterfly!"];
+  const [inputHours, setInputHours] = useState(""); // Hours input
+  const [inputMinutes, setInputMinutes] = useState(""); // Minutes input
+  const totalTime = (inputHours * 3600000) + (inputMinutes * 60000); // 1 minute = 60,000 ms
+  const stageTime = totalTime / stages.length;
 
   const [stage, setStage] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(defaultTotalTime); 
+  const [timeLeft, setTimeLeft] = useState(totalTime); 
   const [isPaused, setIsPaused] = useState(false); // To control the pause state
   const [isStarted, setIsStarted] = useState(false); // To control if timer is started or not
   const [studyPlan, setStudyPlan] = useState("");
   const [hoursPerDay, setHoursPerDay] = useState("");
   const [selectedExam, setSelectedExam] = useState(null);
 
-  const [inputHours, setInputHours] = useState(""); // Hours input
-  const [inputMinutes, setInputMinutes] = useState(""); // Minutes input
+  
 
   const startTimer = () => {
     setIsStarted(true);
@@ -212,7 +237,7 @@ function Home() {
   };
 
   const reset = () => {
-    setTimeLeft(defaultTotalTime);
+    setTimeLeft(totalTime);
     setIsStarted(false);
     setStage(newstage);
   }
@@ -236,10 +261,12 @@ function Home() {
       handleComplete();
     }
 
-    const newStage = Math.floor((defaultTotalTime - timeLeft) / stageTime);
-    if (newStage !== stage && newStage < stages.length) {
+    const newStage = Math.floor((totalTime - timeLeft) / (totalTime
+       / 3));
+    if (newStage !== stage && newStage < 4) {
       setStage(newStage);
     }
+
 
     return () => clearInterval(interval);
   }, [isPaused, timeLeft, isStarted, stage]);
@@ -258,10 +285,13 @@ function Home() {
   const [isButtonClicked, setIsButtonClicked] = useState(false);
   
   const addButterfly = () => {
-    for (let index = 0; index < window.butterflyCounter; index++) {
+    for (let index = 0; index < window.butterflyCounter/2-1; index++) {
       setButterflies((prevButterflies) => [...prevButterflies, "🦋"]);
     }
     setIsButtonClicked(true);
+    setTimeout(() => {
+      setButterflies([]); // Clear butterflies after 3 seconds (or any desired duration)
+    }, 1000);
   };
   
     
@@ -368,7 +398,7 @@ function Home() {
         </div>
       </div>
 
-      <div className="study-plan">
+      <div className="study-plan blockBottom block">
         <h2 style={{marginLeft: '30px'}}>Generated Study Plan</h2>
         {studyPlan ? (
           <div className="study-plan-box">

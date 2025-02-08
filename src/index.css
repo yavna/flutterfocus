@@ -24,7 +24,7 @@ a:hover {
 
 body {
   margin: 0;
-  background-color: #bbcdc9;
+  background-color: #DEEFF7;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -45,7 +45,7 @@ button {
   font-weight: 500;
   font-family: inherit;
   background-color: #fefae0;
-  color: #ccd5ae;
+  color: #649072;
   cursor: pointer;
   transition: border-color 0.25s;
   margin: 2px;

@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import Calendar from "./pages/Calendar";
 import StudyNow from "./pages/StudyNow";
 import Garden from "./pages/Garden";
+import './App.css'; 
 
 
 function App() {
