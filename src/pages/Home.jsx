@@ -71,20 +71,26 @@ function Home() {
     }
   };
 
+  // tab handling
+  const [activeTab, setActiveTab] = useState(null);
+  const handleTabClick = (tabId) => {
+    setActiveTab(tabId);
+  };  
+
   return (
     <div className="home">
       <h1>Flutter Focus</h1>
       <div className="blocks">
-        <div className="block">
+        <div className="block mainBlock">
           <Link to="/calendar"><button>Calendar</button></Link>
           <Link to="/study"><button>Study Now</button></Link>
           <Link to="/garden"><button>Garden</button></Link>
-          <div className="tab">
-            <button className="tablinks" onClick={() => openTab('Tab1')}>Calendar</button>
-            <button className="tablinks" onClick={() => openTab('Tab2')}>Study</button>
+          <div className="tabButton">
+            <button className="tablinks" onClick={() => handleTabClick('Tab1')}>Calendar</button>
+            <button className="tablinks" onClick={() => handleTabClick('Tab2')}>Study</button>
           </div>
           <div id="Tab1" className="tabcontent">
-            <div>
+            <div className={`tab ${activeTab === 'Tab1' ? 'active' : ''}`}>
                   <h2>Study Calendar</h2>
                   <input
                     type="text"
@@ -110,7 +116,7 @@ function Home() {
           </div>
 
           <div id="Tab2" className="tabcontent">
-            <div>
+            <div className={`tab ${activeTab === 'Tab2' ? 'active' : ''}`}>
               <h2>Study Now</h2>
               <motion.div animate={{ scale: 1.2 }} transition={{ duration: 0.5 }}>
                 <p>{stages[stage]}</p>
@@ -128,7 +134,7 @@ function Home() {
           </div>
         </div>
         <div className="block">
-          <h2>Garden</h2>
+          <h2 style={{ marginTop: '5px'}}>Garden</h2>
           <button onClick={addButterfly}>Release butterly collection</button>
           <div>{butterflies.map((b, i) => <span key={i}>{b}</span>)}</div>
           <Link to="/home"><button>Back</button></Link>
