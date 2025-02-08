@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { format } from "date-fns";
+import { Link } from "react-router-dom";
 
 function Calendar() {
   const [exams, setExams] = useState([]);
@@ -11,6 +12,7 @@ function Calendar() {
     setExamName("");
     setExamDate("");
   };
+
 
   return (
     <div>
@@ -27,7 +29,6 @@ function Calendar() {
         onChange={(e) => setExamDate(e.target.value)}
       />
       <button onClick={addExam}>Add Exam</button>
-
       <ul>
         {exams.map((exam, index) => (
           <li key={index}>
@@ -35,6 +36,7 @@ function Calendar() {
           </li>
         ))}
       </ul>
+      <Link to="/home"><button>Back</button></Link>
     </div>
   );
 }

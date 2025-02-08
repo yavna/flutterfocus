@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 function StudyNow() {
   const [stage, setStage] = useState(0);
@@ -18,6 +19,7 @@ function StudyNow() {
         <p>{stages[stage]}</p>
       </motion.div>
       <button onClick={nextStage}>Study!</button>
+      <Link to="/home"><button>Back</button></Link>
     </div>
   );
 }
