@@ -114,9 +114,9 @@ input {
 
 .time-left-container {
   background-color: #F9E1DD;
-  padding: 4px;
+  padding: 0px;
   border-radius: 8px;
-  margin: 5 px auto;
+  margin: 8px;
   display: flex;
   align-items: center;
   justify-content: center;

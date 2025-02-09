@@ -9,7 +9,7 @@ import React from 'react';
 function Caterpillar() {
   return (
     <div>
-      <img src="/assets/caterpillar.jpg" alt="Caterpillar" style={{ width: '50px', height: 'auto' }} />
+      <img src="/assets/caterpillar.jpg" alt="Caterpillar" style={{ width: '100px', height: 'auto' }} />
     </div>
   );
 }
@@ -17,7 +17,7 @@ function Caterpillar() {
 function Cocoon() {
   return (
     <div>
-      <img src="/assets/cocoon.jpg" alt="Cocoon" style={{ width: '50px', height: 'auto' }} />
+      <img src="/assets/cocoon.jpg" alt="Cocoon" style={{ width: '100px', height: 'auto' }} />
     </div>
   );
 }
@@ -348,7 +348,7 @@ function Home() {
           </div>
                   
           <div className={toggle === 1 ? "showContent" : "tabcontent"}>
-            <h2>Study Calendar</h2>
+            <h2>Calendar</h2>
             <input 
               className="study-input"
               type="text"
@@ -382,7 +382,7 @@ function Home() {
             </div>
 
             <div className={toggle === 2 ? "showContent" : "tabcontent"}>
-              <h2>Study Now</h2>
+              <h2 style={{marginTop: '10px', marginBottom: '5px'}}>Study</h2>
               <div className="centered-container">
                 <motion.div animate={{ scale: 1.2 }} transition={{ duration: 0.5 }}>
                   <p>{stages[stage]}</p>
@@ -390,7 +390,7 @@ function Home() {
               </div>
               {/* Timer Input Section */}
               <div>
-                <h2>Set Timer</h2>
+                <h3 style={{marginTop: '0px', marginBottom: '10px'}}>Set Timer</h3>
                 <input
                   type="number"
                   id="timer-input"
@@ -412,7 +412,7 @@ function Home() {
               </div>
               <div>
                 
-                  <h4>Time Left: <div className="time-left-container"><h2>{formatTime(timeLeft)}</h2></div></h4>
+                  <h3>Time Left <div className="time-left-container"><h4>{formatTime(timeLeft)}</h4></div></h3>
                 
                 <button className="internalButton" onClick={pauseTimer}>
                   {isPaused ? "Resume" : "Pause"}
@@ -425,7 +425,7 @@ function Home() {
 
         <div className="block">
           <h2 style={{ marginTop: '5px'}}>Garden</h2>
-          <button onClick={addButterfly}>Release butterfly collection</button>
+          <button onClick={addButterfly}>Release Butterflies</button>
           <div>
             <img src="/assets/tulips.jpg" alt="Tulips" style={{ width: '300px', height: 'auto', marginTop: '250px'}} />
           </div>
