@@ -460,9 +460,9 @@ function Home() {
           </div>
         </div>
 
-        <div className="block" blockGarden>
+        <div className="block blockGarden">
           <h2 style={{ marginTop: "5px" }}>Garden</h2>
-          <button onClick={addButterfly}>Release Butterflies 🦋</button>
+          <button style={{backgroundColor: '#FCF0EE', color: '#6c757d'}} onClick={addButterfly}>Release Butterflies 🦋</button>
           <div>
             <img
               src="/assets/tulips.jpg"
@@ -498,7 +498,7 @@ function Home() {
             No study plan available. Please select an exam and click the button!
           </p>
         )}
-        <button style={{ marginBottom: "40px", marginLeft: "30px" }} onClick={generateStudyPlan}>
+        <button style={{ marginBottom: "40px", marginLeft: "30px", backgroundColor: '#FFF2C2', color: '#6c757d' }} onClick={generateStudyPlan}>
           Generate Study Plan
         </button>
       </div>

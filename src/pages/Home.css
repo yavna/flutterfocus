@@ -39,8 +39,8 @@ input {
 }
 
 .mainBlock {
-    width: 60vw;
-    height: 74vh;
+    width: 40vw;
+    height: 70vh;
     background-color: #ccd5ae;
     flex-direction: column;
     justify-content: space-between;
