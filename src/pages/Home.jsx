@@ -338,6 +338,7 @@ function Home() {
       transition={{ duration: 0.5 }}
       className="home"
     >
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
       <h1 className="title">Flutter Focus</h1>
       <div className="blocks">
         <div className="block mainBlock">
@@ -417,7 +418,7 @@ function Home() {
                       <p>{stages[stage]}</p>
                     </motion.div>
                   </div>
-                  {/* Timer Input Section */}
+                  
                   <div>
                     <input
                       type="number"
@@ -460,7 +461,7 @@ function Home() {
                 </motion.div>
               )}
             </AnimatePresence>
-          </div>
+          </div> 
         </div>
 
         <div className="block blockGarden">
@@ -471,7 +472,7 @@ function Home() {
               src="/assets/tulips.jpg"
               alt="Tulips"
               style={{
-                width: "300px",
+                width: "28vw",
                 height: "auto",
                 marginTop: "250px",
               }}
