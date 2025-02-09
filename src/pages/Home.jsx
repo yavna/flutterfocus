@@ -9,7 +9,7 @@ import React from 'react';
 function Caterpillar() {
   return (
     <div>
-      <img src="/assets/caterpillar.jpg" alt="Caterpillar" style={{ width: '100px', height: 'auto' }} />
+      <img src="/assets/caterpillar.jpg" alt="Caterpillar" style={{ width: '50px', height: 'auto' }} />
     </div>
   );
 }
@@ -17,7 +17,7 @@ function Caterpillar() {
 function Cocoon() {
   return (
     <div>
-      <img src="/assets/cocoon.jpg" alt="Cocoon" style={{ width: '100px', height: 'auto' }} />
+      <img src="/assets/cocoon.jpg" alt="Cocoon" style={{ width: '50px', height: 'auto' }} />
     </div>
   );
 }
@@ -412,7 +412,7 @@ function Home() {
               </div>
               <div>
                 
-                  <h4>Time Left: <div className="time-left-container"><h1>{formatTime(timeLeft)}</h1></div></h4>
+                  <h4>Time Left: <div className="time-left-container"><h2>{formatTime(timeLeft)}</h2></div></h4>
                 
                 <button className="internalButton" onClick={pauseTimer}>
                   {isPaused ? "Resume" : "Pause"}
