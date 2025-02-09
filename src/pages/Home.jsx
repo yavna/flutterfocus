@@ -331,7 +331,7 @@ function Home() {
         <div className="block mainBlock">
           <div className="tabButton">
             <button className="tablinks" onClick={() => handleTabClick(1)}>
-              Calendar
+              Exams
             </button>
             <button className="tablinks" onClick={() => handleTabClick(2)}>
               Study

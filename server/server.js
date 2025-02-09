@@ -4,18 +4,20 @@ import dotenv from "dotenv";
 import path from "path";
 import { env } from "node:process";
 import { GoogleGenerativeAI, SchemaType } from "@google/generative-ai";
-import { fileURLToPath } from "url";
-import { dirname } from "path";
+// import { fileURLToPath } from "url";
+// import { dirname } from "path";
 
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = dirname(__filename);
 
 dotenv.config({ path: path.resolve(__dirname, "./.env") });
 
 const app = express();
 app.use(express.json());
-app.use(cors()); 
+app.use(cors({
+  origin: 'https://yavna.github.io', // Replace with your actual GitHub Pages URL
+}));
 
 const genAI = new GoogleGenerativeAI(env.GEMINI_API_KEY);
 
@@ -40,7 +42,7 @@ const model = genAI.getGenerativeModel({
   },
 });
 
-app.use(express.static(path.join(__dirname, "dist")));
+// app.use(express.static(path.join(__dirname, "dist")));
 
 app.post("/api/generate-study-plan", async (req, res) => {
     const { examName, examDate, hoursPerDay } = req.body;
