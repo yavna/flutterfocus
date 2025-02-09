@@ -61,7 +61,6 @@ function Home() {
       breakTimes: 'Break Times',
       revisionStrategies: 'Revision Strategies',
       time: 'Time',
-      topic: 'Topic',
       description: 'Description',
       generalRecommendations: 'General Recommendations',
       recommendations : 'Recommendations',
@@ -88,17 +87,6 @@ function Home() {
       schedule : 'Schedule',
       examDay : 'Exam Day',
       FocusAreas : 'Focus Areas',
-      practice : 'Practice',
-      details : 'Details',
-      DifficultyLevel : 'Difficulty Level',
-      TimeManagement : 'Time Management',
-      keyConcepts : 'Key Concepts',
-      commonPitfalls : 'Common Pitfalls',
-      DayTips : 'Day Tips',
-      problemSolving : 'Problem Solving',
-      dailySchedule : 'Daily Schedule',
-      overallRevision : 'Overall Revision',
-      DaysLeft : 'Days Left',
     };
   
 
@@ -364,6 +352,7 @@ function Home() {
                   className="showContent"
                 >
                   <h2>Calendar</h2>
+                  <p>Input your exam topics, hours you wish to study per day, and exam date to get a personalized AI study plan!</p>
                   <input
                     className="study-input"
                     type="text"

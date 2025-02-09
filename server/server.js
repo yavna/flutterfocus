@@ -50,13 +50,15 @@ app.post("/api/generate-study-plan", async (req, res) => {
         (new Date(examDate) - new Date()) / (1000 * 60 * 60 * 24)
       );
   
-      const prompt = `Create a personalized study plan for an exam in ${examName} scheduled on ${examDate}. 
+      const prompt = `Create a personalized study plan for an exam with topic(s) ${examName} scheduled on ${examDate}. 
       The user has ${daysUntilExam} days left and can study ${hoursPerDay} hours per day. 
       The plan should include:
       - A structured daily schedule covering key topics.
       - Suggested breaks and revision strategies.
       - Practice problems or exercises for each study session.
-      - Recommendations on what to focus on based on difficulty levels.`;
+      - Recommendations on what to focus on based on difficulty levels.
+      - Use the following format: Day (number), Schedule, Time, Topic, Practice Problems, Difficulty, Break, Revision Strategies 
+      `;
   
       const result = await model.generateContent(prompt);
       const studyPlan = result.response.text();
