@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { format } from "date-fns";
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence,motion } from "framer-motion";
 import './Home.css'
 import Countdown from 'react-countdown';
 import React from 'react';
@@ -9,7 +9,7 @@ import React from 'react';
 function Caterpillar() {
   return (
     <div>
-      <img src="/assets/caterpillar.jpg" alt="Caterpillar" style={{ width: '50px', height: 'auto' }} />
+      <img src="/assets/caterpillar.jpg" alt="Caterpillar" style={{ width: '100px', height: 'auto' }} />
     </div>
   );
 }
@@ -17,7 +17,7 @@ function Caterpillar() {
 function Cocoon() {
   return (
     <div>
-      <img src="/assets/cocoon.jpg" alt="Cocoon" style={{ width: '50px', height: 'auto' }} />
+      <img src="/assets/cocoon.jpg" alt="Cocoon" style={{ width: '100px', height: 'auto' }} />
     </div>
   );
 }
@@ -52,7 +52,8 @@ function Home() {
       console.error('Error parsing outer JSON:', err);
       return rawString;
     }
-  
+    
+    // replacing keys with readable values (couldn't figure out how else to do this) (moment of weakness)
     const replacements = {
       day: '\nDay',
       practiceProblems: 'Practice Problems',
@@ -139,7 +140,8 @@ function Home() {
         console.error('Error parsing inner studyPlan JSON:', err);
         return rawString;
       }
-    } else {
+    } 
+    else {
       let formattedPlan = JSON.stringify(parsedOuter, null, 2);
   
       formattedPlan = formattedPlan.replace(/[{}[\],"]/g, '');
@@ -154,14 +156,12 @@ function Home() {
   
 
   const generateStudyPlan = async () => {
-    if (!selectedExam) {
+    if (!selectedExam) { // ensure that an exam is selected
       alert("Please select an exam first.");
       return;
     }
   
-    try {
-      console.log("Sending request to backend...");
-  
+    try {  
       const response = await fetch("http://localhost:5000/api/generate-study-plan", {
         method: "POST",
         headers: {
@@ -180,8 +180,8 @@ function Home() {
       }
   
       const data = await response.json();
-      console.log("Raw Study Plan Data:", data);
   
+      // display the study plan to user
       const formattedPlan = formatStudyPlan(data.studyPlan);
       setStudyPlan(formattedPlan);
   
@@ -198,6 +198,7 @@ function Home() {
 
   // ui components
 
+  // input and add exam/topics to calendar tab
   const [exams, setExams] = useState([]);
   const [examName, setExamName] = useState("");
   const [examDate, setExamDate] = useState("");
@@ -221,8 +222,6 @@ function Home() {
   const [studyPlan, setStudyPlan] = useState("");
   const [hoursPerDay, setHoursPerDay] = useState("");
   const [selectedExam, setSelectedExam] = useState(null);
-
-  
 
   const startTimer = () => {
     setIsStarted(true);
@@ -296,7 +295,7 @@ function Home() {
       const randomY = Math.random() * (600 - 500) + 500; // Vertical position between 0 and 500px
       
       // Random animation duration between 2s and 4s
-      const randomDuration = Math.random() * 2 + 2; // e.g., 2s to 4s
+      const randomDuration = Math.random() * 2 + 2;
       
       newButterflies.push(
         <div
@@ -317,9 +316,8 @@ function Home() {
     setButterflies(newButterflies);
     setIsButtonClicked(true);
   
-    // Clear butterflies after a while (e.g., 3 seconds)
     setTimeout(() => {
-      setButterflies([]); // Clear butterflies after 3 seconds (or any desired duration)
+    setButterflies([]); 
     }, 3000); // This should match the flying duration
   };  
 
@@ -333,6 +331,7 @@ function Home() {
   };
 
   return (
+    // transitions for page load
     <motion.div
       initial={{ opacity: 0, y: -50 }}
       animate={{ opacity: 1, y: 0 }}
@@ -343,103 +342,151 @@ function Home() {
       <div className="blocks">
         <div className="block mainBlock">
           <div className="tabButton">
-            <button className="tablinks" onClick={() => handleTabClick(1)}>Calendar</button>
-            <button className="tablinks" onClick={() => handleTabClick(2)}>Study</button>
+            <button className="tablinks" onClick={() => handleTabClick(1)}>
+              Calendar
+            </button>
+            <button className="tablinks" onClick={() => handleTabClick(2)}>
+              Study
+            </button>
           </div>
-                  
-          <div className={toggle === 1 ? "showContent" : "tabcontent"}>
-            <h2>Study Calendar</h2>
-            <input 
-              className="study-input"
-              type="text"
-              placeholder="Exam Name"
-              value={examName}
-              onChange={(e) => setExamName(e.target.value)}
-            />
-            <input
-              type="number"
-              className="study-input"
-              placeholder="Hours per day"
-              value={hoursPerDay}
-              onChange={(e) => setHoursPerDay(e.target.value)}
-            />
-            <input
-              type="date"
-              className="study-input"
-              value={examDate}
-              onChange={(e) => setExamDate(e.target.value)}
-            />
-            <button style={{marginLeft: '10px'}} onClick={addExam}>Add Exam</button>
+          
+          <div style={{ position: "relative", height: "calc(100% - 50px)" }}>
+            <AnimatePresence mode="wait">
+              {toggle === 1 && (
+                // transition for tabs
+                <motion.div
+                  key="calendar"
+                  style={{ position: "absolute", width: "100%" }}
+                  initial={{ opacity: 0, x: -50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 50 }}
+                  transition={{ duration: 0.5 }}
+                  className="showContent"
+                >
+                  <h2>Calendar</h2>
+                  <input
+                    className="study-input"
+                    type="text"
+                    placeholder="Exam topic(s)"
+                    value={examName}
+                    onChange={(e) => setExamName(e.target.value)}
+                  />
+                  <input
+                    type="number"
+                    className="study-input"
+                    placeholder="Hours per day"
+                    value={hoursPerDay}
+                    onChange={(e) => setHoursPerDay(e.target.value)}
+                  />
+                  <input
+                    type="date"
+                    className="study-input"
+                    value={examDate}
+                    onChange={(e) => setExamDate(e.target.value)}
+                  />
+                  <button style={{ marginLeft: "10px" }} onClick={addExam}>
+                    Add Exam
+                  </button>
 
-            <ul>
-            {exams.map((exam, index) => (
-              <li key={index}>
-                {exam.name} - {format(new Date(exam.date), "PP")}
-                <button onClick={() => handleSelectExam(index)}>Select</button>
-                </li>
-            ))}
-            </ul>
-            </div>
-
-            <div className={toggle === 2 ? "showContent" : "tabcontent"}>
-              <h2>Study Now</h2>
-              <div className="centered-container">
-                <motion.div animate={{ scale: 1.2 }} transition={{ duration: 0.5 }}>
-                  <p>{stages[stage]}</p>
+                  <ul>
+                    {exams.map((exam, index) => (
+                      <li key={index}>
+                        {exam.name} - {format(new Date(exam.date), "PP")}
+                        <button onClick={() => handleSelectExam(index)}>Select</button>
+                      </li>
+                    ))}
+                  </ul>
                 </motion.div>
-              </div>
-              {/* Timer Input Section */}
-              <div>
-                <h2>Set Timer</h2>
-                <input
-                  type="number"
-                  id="timer-input"
-                  placeholder="Hours"
-                  value={inputHours}
-                  onChange={(e) => setInputHours(Number(e.target.value))}
-                  min="0"
-                />
-                <input
-                  type="number"
-                  id="timer-input"
-                  placeholder="Minutes"
-                  value={inputMinutes}
-                  onChange={(e) => setInputMinutes(Number(e.target.value))}
-                  min="0"
-                  max="59"
-                />
-                <button className="internalButton" onClick={updateTimer}>Set Timer</button>
-              </div>
-              <div>
-                
-                  <h4>Time Left: <div className="time-left-container"><h2>{formatTime(timeLeft)}</h2></div></h4>
-                
-                <button className="internalButton" onClick={pauseTimer}>
-                  {isPaused ? "Resume" : "Pause"}
-                </button>
-                <button className="internalButton" onClick={startTimer} disabled={isStarted}>Study</button>
-                <button className="internalButton" onClick={reset}>Reset</button>
-              </div>
-            </div>
+              )}
+
+              {toggle === 2 && (
+                <motion.div
+                  key="study"
+                  style={{ position: "absolute", width: "100%" }}
+                  initial={{ opacity: 0, x: 50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -50 }}
+                  transition={{ duration: 0.5 }}
+                  className="showContent"
+                >
+                  <div className="centered-container">
+                    <motion.div animate={{ scale: 1.0 }} transition={{ duration: 0.2 }}>
+                      <p>{stages[stage]}</p>
+                    </motion.div>
+                  </div>
+                  {/* Timer Input Section */}
+                  <div>
+                    <input
+                      type="number"
+                      id="timer-input"
+                      placeholder="Hours"
+                      value={inputHours}
+                      onChange={(e) => setInputHours(Number(e.target.value))}
+                      min="0"
+                    />
+                    <input
+                      type="number"
+                      id="timer-input"
+                      placeholder="Minutes"
+                      value={inputMinutes}
+                      onChange={(e) => setInputMinutes(Number(e.target.value))}
+                      min="0"
+                      max="59"
+                    />
+                    <button className="internalButton" onClick={updateTimer}>
+                      Set Timer
+                    </button>
+                  </div>
+                  <div>
+                    <h4 style = {{marginTop: '50px'}}>
+                      Time Left:{" "}
+                      <div className="time-left-container">
+                        <h1>{formatTime(timeLeft)}</h1>
+                      </div>
+                    </h4>
+                    <button className="internalButton" onClick={pauseTimer}>
+                      {isPaused ? "Resume" : "Pause"}
+                    </button>
+                    <button className="internalButton" onClick={startTimer} disabled={isStarted}>
+                      Study
+                    </button>
+                    <button className="internalButton" onClick={reset}>
+                      Reset
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
 
-        <div className="block blockGarden">
-          <h2 style={{ marginTop: '5px'}}>Garden</h2>
-          <button onClick={addButterfly}>Release butterfly collection</button>
+        <div className="block" blockGarden>
+          <h2 style={{ marginTop: "5px" }}>Garden</h2>
+          <button onClick={addButterfly}>Release Butterflies 🦋</button>
           <div>
-            <img src="/assets/tulips.jpg" alt="Tulips" style={{ width: '300px', height: 'auto', marginTop: '250px'}} />
+            <img
+              src="/assets/tulips.jpg"
+              alt="Tulips"
+              style={{
+                width: "300px",
+                height: "auto",
+                marginTop: "250px",
+              }}
+            />
           </div>
           <div>{butterflies.map((b, i) => <span key={i}>{b}</span>)}</div>
         </div>
       </div>
 
       <div className="study-plan blockBottom block">
-        <h2 style={{marginLeft: '30px'}}>Generated Study Plan</h2>
         {studyPlan ? (
           <div className="study-plan-box">
             <pre style={{ whiteSpace: "pre-wrap", textAlign: "left" }}>
-              {studyPlan.split('\n').map((line, index) => (
-                <span key={index} style={{ fontWeight: line.startsWith('Day') ? 'bold' : 'normal' }}>
+              {studyPlan.split("\n").map((line, index) => (
+                <span
+                  key={index}
+                  style={{ fontWeight: line.startsWith("Day") ? "bold" : "normal" }}
+                >
                   {line}
                   <br />
                 </span>
@@ -447,9 +494,13 @@ function Home() {
             </pre>
           </div>
         ) : (
-          <p style={{marginLeft: '30px'}}>No study plan generated yet. Please add an exam and click Generate Study Plan.</p>
+          <p style={{ marginLeft: "30px" }}>
+            No study plan available. Please select an exam and click the button!
+          </p>
         )}
-        <button style={{marginBottom: '40px', marginLeft: '30px'}}onClick={generateStudyPlan}>Generate Study Plan</button>
+        <button style={{ marginBottom: "40px", marginLeft: "30px" }} onClick={generateStudyPlan}>
+          Generate Study Plan
+        </button>
       </div>
     </motion.div>
   );
