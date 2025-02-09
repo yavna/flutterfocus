@@ -198,9 +198,9 @@ function Home() {
   };
 
   const stages = [Caterpillar(), Cocoon(), Butterfly(), "You've earned a butterfly!"];
-  const [inputHours, setInputHours] = useState(""); // Hours input
-  const [inputMinutes, setInputMinutes] = useState(""); // Minutes input
-  const totalTime = (inputHours * 3600000) + (inputMinutes * 60000); // 1 minute = 60,000 ms
+  const [inputHours, setInputHours] = useState("");
+  const [inputMinutes, setInputMinutes] = useState("");
+  const totalTime = (inputHours * 3600000) + (inputMinutes * 60000);
   const stageTime = totalTime / stages.length;
 
   const [stage, setStage] = useState(0);
@@ -233,7 +233,7 @@ function Home() {
 
   // User input timer
   const updateTimer = () => {
-    const newTimeLeft = (inputHours * 3600000) + (inputMinutes * 60000); // Convert hours and minutes to milliseconds
+    const newTimeLeft = (inputHours * 3600000) + (inputMinutes * 60000); // convert to milliseconds
     setTimeLeft(newTimeLeft);
     setIsStarted(false); // Reset timer state to not started
     setStage(0); // Reset stage
@@ -244,7 +244,7 @@ function Home() {
     let interval;
     if (isStarted && !isPaused && timeLeft > 0) {
       interval = setInterval(() => {
-        setTimeLeft((prev) => prev - 1000); // Reduce 1 second (1000 ms)
+        setTimeLeft((prev) => prev - 1000);
       }, 1000);
     } else if (timeLeft <= 0) {
       handleComplete();
@@ -260,11 +260,11 @@ function Home() {
     return () => clearInterval(interval);
   }, [isPaused, timeLeft, isStarted, stage]);
 
-  // Format timeLeft into HH:MM:SS
+  // format time to HH:MM:SS
   const formatTime = (ms) => {
-    const hours = Math.floor(ms / 3600000); // Calculate hours
-    const minutes = Math.floor((ms % 3600000) / 60000); // Calculate minutes
-    const seconds = Math.floor((ms % 60000) / 1000); // Calculate seconds
+    const hours = Math.floor(ms / 3600000);
+    const minutes = Math.floor((ms % 3600000) / 60000);
+    const seconds = Math.floor((ms % 60000) / 1000);
 
     return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
   };
@@ -282,7 +282,6 @@ function Home() {
       const randomX = Math.random() * (1000 - 999.9) + (999.9); // Horizontal position between 0 and 500px
       const randomY = Math.random() * (600 - 500) + 500; // Vertical position between 0 and 500px
       
-      // Random animation duration between 2s and 4s
       const randomDuration = Math.random() * 2 + 2;
       
       newButterflies.push(
@@ -378,15 +377,25 @@ function Home() {
                   </button>
 
                   <ul>
-                  {exams.map((exam, index) => (
-                    <li key={index} className="exam-item">
-                      <span>
-                        {exam.name} - {format(new Date(exam.date), "PP")}
-                      </span>
-                      <button onClick={() => handleSelectExam(index)}>Select</button>
-                    </li>
-                  ))}
-              </ul>
+            <AnimatePresence>
+            {exams.map((exam, index) => (
+              <motion.li
+                key={index}
+                className="exam-item"
+                initial={{ opacity: 0, x: -50 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 50 }}
+                transition={{ duration: 0.3 }}
+              >
+                <span>
+                  {exam.name} - {format(new Date(exam.date), "PP")}
+                </span>
+                <button onClick={() => handleSelectExam(index)}>Select</button>
+              </motion.li>
+            ))}
+          </AnimatePresence>
+        </ul>
+
 
                 </motion.div>
               )}
@@ -406,7 +415,6 @@ function Home() {
                       <p>{stages[stage]}</p>
                     </motion.div>
                   </div>
-                  {/* Timer Input Section */}
                   <div>
                     <input
                       type="number"
@@ -470,30 +478,57 @@ function Home() {
         </div>
       </div>
 
-      <div className="study-plan blockBottom block">
-        {studyPlan ? (
-          <div className="study-plan-box">
-            <pre style={{ whiteSpace: "pre-wrap", textAlign: "left" }}>
-              {studyPlan.split("\n").map((line, index) => (
-                <span
-                  key={index}
-                  style={{ fontWeight: line.startsWith("Day") ? "bold" : "normal" }}
-                >
-                  {line}
-                  <br />
-                </span>
-              ))}
-            </pre>
-          </div>
-        ) : (
-          <p style={{ marginLeft: "30px" }}>
-            No study plan available. Please select an exam and click the button!
-          </p>
-        )}
-        <button style={{ marginBottom: "40px", marginLeft: "30px", backgroundColor: '#FFF2C2', color: '#6c757d' }} onClick={generateStudyPlan}>
-          Generate Study Plan
-        </button>
-      </div>
+  <div className="study-plan blockBottom block">
+  <AnimatePresence>
+    {studyPlan ? (
+      <motion.div
+        key="studyPlanContent"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 1.0 }}
+      >
+        <div className="study-plan-box">
+          <pre style={{ whiteSpace: "pre-wrap", textAlign: "left", fontFamily: "'Arial', bold" }}>
+            {studyPlan.split("\n").map((line, index) => (
+              <span
+                key={index}
+                style={{ fontWeight: line.startsWith("Day") ? "bold" : "normal" }}
+              >
+                {line}
+                <br />
+              </span>
+            ))}
+          </pre>
+        </div>
+      </motion.div>
+    ) : (
+      <motion.div
+        key="noStudyPlan"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <p style={{ marginLeft: "30px" }}>
+          No study plan available. Please select an exam and click the button!
+        </p>
+      </motion.div>
+    )}
+  </AnimatePresence>
+  <button
+    style={{
+      marginBottom: "40px",
+      marginLeft: "30px",
+      backgroundColor: "#FFF2C2",
+      color: "#6c757d",
+    }}
+    onClick={generateStudyPlan}
+  >
+    Generate Study Plan
+  </button>
+</div>
+
     </motion.div>
   );
 }

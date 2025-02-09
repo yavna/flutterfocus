@@ -6,13 +6,13 @@ import { incrementCounter } from './Home';
 
 function StudyNow() {
   const stages = ["🐛", "🟡 Cocoon", "🦋 Butterfly"];
-  const totalTime = 60000 * .5; // 1 minute = 60,000 ms
+  const totalTime = 60000 * .5;
   const stageTime = totalTime / stages.length;
 
   const [stage, setStage] = useState(0);
   const [timeLeft, setTimeLeft] = useState(totalTime); 
-  const [isPaused, setIsPaused] = useState(false); // To control the pause state
-  const [isStarted, setIsStarted] = useState(false); // To control if timer is started or not
+  const [isPaused, setIsPaused] = useState(false); 
+  const [isStarted, setIsStarted] = useState(false);
 
   const startTimer = () => {
     setIsStarted(true);
@@ -28,12 +28,11 @@ function StudyNow() {
     console.log("Time's up");
   };
 
-  // Handling time reduction logic (counts down in seconds)
   useEffect(() => {
     let interval;
     if (isStarted && !isPaused && timeLeft > 0) {
       interval = setInterval(() => {
-        setTimeLeft((prev) => prev - 1000); // Reduce 1 second (1000 ms)
+        setTimeLeft((prev) => prev - 1000); 
       }, 1000);
     } else if (timeLeft <= 0) {
       handleComplete();
@@ -47,7 +46,6 @@ function StudyNow() {
     return () => clearInterval(interval);
   }, [isPaused, timeLeft, isStarted, stage]);
 
-  // Format timeLeft into MM:SS
   const formatTime = (ms) => {
     const minutes = Math.floor(ms / 60000);
     const seconds = Math.floor((ms % 60000) / 1000);
