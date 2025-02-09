@@ -1,11 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Oleo+Script+Swash+Caps:wght@400;700&family=Pacifico&family=Rubik+Beastly&family=Shrikhand&family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 .title {
-  font-family: "Gluten", serif;
-  font-size: 5em;
+  font-family: "Pacifico", serif;
   color: #213547;
   text-align: center;
   margin-bottom: 20px;
+  margin-top: 20px;
+  font-size: 100px;
 }
 
 input { 
@@ -21,6 +23,12 @@ input {
 
 .blockBottom {
     background-color: #ffe99b;
+    box-shadow: 10px 10px #FFE070;
+}
+
+.blockGarden {
+    box-shadow: 10px 10px #F6D1CB;
+    padding-bottom: 0;
 }
 
 .blocks {
@@ -39,6 +47,7 @@ input {
     justify-content: space-between;
     padding: 20px;
     box-sizing: border-box;
+    box-shadow: 10px 10px #B7CDBD;
 }
 
 .showContent {
@@ -119,13 +128,22 @@ input {
 }
 
 .time-left-container {
-  background-color: #F9E1DD;
+  background-color: #f4ffca9d;
   padding: 0px;
   border-radius: 8px;
   margin: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.exam-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  list-style: none;
+  padding: 12px 0; 
+  border-bottom: 2px solid #2d5a2c93;
 }
 
 
