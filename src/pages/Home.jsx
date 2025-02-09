@@ -222,7 +222,6 @@ function Home() {
   };
 
   const handleComplete = () => {
-    console.log("Time's up");
     incrementCounter();
   };
 
@@ -247,8 +246,9 @@ function Home() {
       interval = setInterval(() => {
         setTimeLeft((prev) => prev - 1000);
       }, 1000);
-    } else if (timeLeft <= 0) {
+    } else if (isStarted && timeLeft==0) {
       handleComplete();
+      setIsStarted(false);
     }
 
     const newStage = Math.floor((totalTime - timeLeft) / (totalTime
@@ -278,7 +278,7 @@ function Home() {
     // Set up butterflies with random positions and random animation durations
     const newButterflies = [];
     
-    for (let index = 0; index < (window.butterflyCounter-2)/2; index++) {
+    for (let index = 0; index < window.butterflyCounter; index++) {
       // Random horizontal and vertical positions
       const randomX = Math.random() * 20 + 60; // Horizontal position between 0 and 500px
       const randomY = Math.random() * 10 + 50; // Vertical position between 0 and 500px
@@ -327,7 +327,7 @@ function Home() {
       className="home"
     >
       <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
-      <h1 className="title">Flutter Focus</h1>
+      <h1 className="title"><img src="/assets/title.jpg" alt="Title" style={{ width: '800px', height: 'auto' }} /></h1>
       <div className="blocks">
         <div className="block mainBlock">
           <div className="tabButton">
@@ -392,7 +392,7 @@ function Home() {
                 <span>
                   {exam.name} - {format(new Date(exam.date), "PP")}
                 </span>
-                <button style={{marginRight: '0px'}}onClick={() => handleSelectExam(index)}>Select</button>
+                <button style={{marginRight: '20px'}}onClick={() => handleSelectExam(index)}>Select</button>
               </motion.li>
             ))}
           </AnimatePresence>
@@ -417,7 +417,6 @@ function Home() {
                       <p>{stages[stage]}</p>
                     </motion.div>
                   </div>
-                  
                   <div>
                     <input
                       type="number"
@@ -465,6 +464,14 @@ function Home() {
 
         <div className="block blockGarden">
           <h2 style={{ marginTop: "5px" }}>Garden</h2>
+          <strong style={{fontFamily: "'Arial', bold"}}>
+            Finish study sessions to earn butterflies!
+          </strong>
+          <div></div>
+          <strong style={{marginBottom: '20px', fontFamily: "'Arial', bold"}}> 
+            Butterfly count: {window.butterflyCounter}
+          </strong>
+          <div style={{marginBottom:'20px'}}></div>
           <button className="buttonGarden" onClick={addButterfly}>Release Butterflies 🦋</button>
           <div>
             <img
@@ -473,7 +480,7 @@ function Home() {
               style={{
                 width: "28vw",
                 height: "auto",
-                marginTop: "250px",
+                marginTop: "200px",
               }}
             />
           </div>
