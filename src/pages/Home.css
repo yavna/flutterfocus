@@ -35,6 +35,27 @@ input {
     width: 27vw;
 }
 
+.buttonGarden {
+  background-color: #F3C3BA;
+  color: #6c757d;
+}
+
+.buttonGarden:hover {
+  
+  background-color: #FCF0EE;
+}
+
+.buttonGenerate {
+  background-color: #FFF2C2;
+  margin-bottom: 40px;
+  margin-left: 30px;
+  color: #6c757d;
+}
+
+.buttonGenerate:hover {
+  background-color: #FFF6D6;
+}
+
 .internalButton {
     margin: 3px;
 }

@@ -5,6 +5,7 @@ import { AnimatePresence,motion } from "framer-motion";
 import './Home.css'
 import Countdown from 'react-countdown';
 import React from 'react';
+import MovingImage from './components'
 
 function Caterpillar() {
   return (
@@ -464,7 +465,7 @@ function Home() {
 
         <div className="block blockGarden">
           <h2 style={{ marginTop: "5px" }}>Garden</h2>
-          <button style={{backgroundColor: '#FCF0EE', color: '#6c757d'}} onClick={addButterfly}>Release Butterflies 🦋</button>
+          <button className="buttonGarden" onClick={addButterfly}>Release Butterflies 🦋</button>
           <div>
             <img
               src="/assets/tulips.jpg"
@@ -519,17 +520,16 @@ function Home() {
     )}
   </AnimatePresence>
   <button
-    style={{
-      marginBottom: "40px",
-      marginLeft: "30px",
-      backgroundColor: "#FFF2C2",
-      color: "#6c757d",
-    }}
+    className="buttonGenerate"
     onClick={generateStudyPlan}
   >
     Generate Study Plan
   </button>
 </div>
+  <div>
+    <img style={{width: '5%'}} src="assets/caterpillar.gif" alt="caterpillar flopping up and down"></img>
+    {/* <Caterpillar/> */}
+  </div>
 
     </motion.div>
   );
