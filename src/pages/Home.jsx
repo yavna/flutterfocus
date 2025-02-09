@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { format } from "date-fns";
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence,motion } from "framer-motion";
 import './Home.css'
 import Countdown from 'react-countdown';
 import React from 'react';
@@ -343,103 +343,151 @@ function Home() {
       <div className="blocks">
         <div className="block mainBlock">
           <div className="tabButton">
-            <button className="tablinks" onClick={() => handleTabClick(1)}>Calendar</button>
-            <button className="tablinks" onClick={() => handleTabClick(2)}>Study</button>
+            <button className="tablinks" onClick={() => handleTabClick(1)}>
+              Calendar
+            </button>
+            <button className="tablinks" onClick={() => handleTabClick(2)}>
+              Study
+            </button>
           </div>
-                  
-          <div className={toggle === 1 ? "showContent" : "tabcontent"}>
-            <h2>Study Calendar</h2>
-            <input 
-              className="study-input"
-              type="text"
-              placeholder="Exam Name"
-              value={examName}
-              onChange={(e) => setExamName(e.target.value)}
-            />
-            <input
-              type="number"
-              className="study-input"
-              placeholder="Hours per day"
-              value={hoursPerDay}
-              onChange={(e) => setHoursPerDay(e.target.value)}
-            />
-            <input
-              type="date"
-              className="study-input"
-              value={examDate}
-              onChange={(e) => setExamDate(e.target.value)}
-            />
-            <button style={{marginLeft: '10px'}} onClick={addExam}>Add Exam</button>
+          
+          <div style={{ position: "relative", height: "calc(100% - 50px)" }}>
+            <AnimatePresence mode="wait">
+              {toggle === 1 && (
+                <motion.div
+                  key="calendar"
+                  style={{ position: "absolute", width: "100%" }}
+                  initial={{ opacity: 0, x: -50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 50 }}
+                  transition={{ duration: 0.5 }}
+                  className="showContent"
+                >
+                  <h2>Study Calendar</h2>
+                  <input
+                    className="study-input"
+                    type="text"
+                    placeholder="Exam topic(s)"
+                    value={examName}
+                    onChange={(e) => setExamName(e.target.value)}
+                  />
+                  <input
+                    type="number"
+                    className="study-input"
+                    placeholder="Hours per day"
+                    value={hoursPerDay}
+                    onChange={(e) => setHoursPerDay(e.target.value)}
+                  />
+                  <input
+                    type="date"
+                    className="study-input"
+                    value={examDate}
+                    onChange={(e) => setExamDate(e.target.value)}
+                  />
+                  <button style={{ marginLeft: "10px" }} onClick={addExam}>
+                    Add Exam
+                  </button>
 
-            <ul>
-            {exams.map((exam, index) => (
-              <li key={index}>
-                {exam.name} - {format(new Date(exam.date), "PP")}
-                <button onClick={() => handleSelectExam(index)}>Select</button>
-                </li>
-            ))}
-            </ul>
-            </div>
-
-            <div className={toggle === 2 ? "showContent" : "tabcontent"}>
-              <h2>Study Now</h2>
-              <div className="centered-container">
-                <motion.div animate={{ scale: 1.2 }} transition={{ duration: 0.5 }}>
-                  <p>{stages[stage]}</p>
+                  <ul>
+                    {exams.map((exam, index) => (
+                      <li key={index}>
+                        {exam.name} - {format(new Date(exam.date), "PP")}
+                        <button onClick={() => handleSelectExam(index)}>Select</button>
+                      </li>
+                    ))}
+                  </ul>
                 </motion.div>
-              </div>
-              {/* Timer Input Section */}
-              <div>
-                <h2>Set Timer</h2>
-                <input
-                  type="number"
-                  id="timer-input"
-                  placeholder="Hours"
-                  value={inputHours}
-                  onChange={(e) => setInputHours(Number(e.target.value))}
-                  min="0"
-                />
-                <input
-                  type="number"
-                  id="timer-input"
-                  placeholder="Minutes"
-                  value={inputMinutes}
-                  onChange={(e) => setInputMinutes(Number(e.target.value))}
-                  min="0"
-                  max="59"
-                />
-                <button className="internalButton" onClick={updateTimer}>Set Timer</button>
-              </div>
-              <div>
-                
-                  <h4>Time Left: <div className="time-left-container"><h1>{formatTime(timeLeft)}</h1></div></h4>
-                
-                <button className="internalButton" onClick={pauseTimer}>
-                  {isPaused ? "Resume" : "Pause"}
-                </button>
-                <button className="internalButton" onClick={startTimer} disabled={isStarted}>Study</button>
-                <button className="internalButton" onClick={reset}>Reset</button>
-              </div>
-            </div>
+              )}
+
+              {toggle === 2 && (
+                <motion.div
+                  key="study"
+                  style={{ position: "absolute", width: "100%" }}
+                  initial={{ opacity: 0, x: 50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -50 }}
+                  transition={{ duration: 0.5 }}
+                  className="showContent"
+                >
+                  <div className="centered-container">
+                    <motion.div animate={{ scale: 1.0 }} transition={{ duration: 0.2 }}>
+                      <p>{stages[stage]}</p>
+                    </motion.div>
+                  </div>
+                  {/* Timer Input Section */}
+                  <div>
+                    <input
+                      type="number"
+                      id="timer-input"
+                      placeholder="Hours"
+                      value={inputHours}
+                      onChange={(e) => setInputHours(Number(e.target.value))}
+                      min="0"
+                    />
+                    <input
+                      type="number"
+                      id="timer-input"
+                      placeholder="Minutes"
+                      value={inputMinutes}
+                      onChange={(e) => setInputMinutes(Number(e.target.value))}
+                      min="0"
+                      max="59"
+                    />
+                    <button className="internalButton" onClick={updateTimer}>
+                      Set Timer
+                    </button>
+                  </div>
+                  <div>
+                    <h4>
+                      Time Left:{" "}
+                      <div className="time-left-container">
+                        <h1>{formatTime(timeLeft)}</h1>
+                      </div>
+                    </h4>
+                    <button className="internalButton" onClick={pauseTimer}>
+                      {isPaused ? "Resume" : "Pause"}
+                    </button>
+                    <button className="internalButton" onClick={startTimer} disabled={isStarted}>
+                      Study
+                    </button>
+                    <button className="internalButton" onClick={reset}>
+                      Reset
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
 
         <div className="block">
-          <h2 style={{ marginTop: '5px'}}>Garden</h2>
+          <h2 style={{ marginTop: "5px" }}>Garden</h2>
           <button onClick={addButterfly}>Release butterfly collection</button>
           <div>
-            <img src="/assets/tulips.jpg" alt="Tulips" style={{ width: '300px', height: 'auto', marginTop: '250px'}} />
+            <img
+              src="/assets/tulips.jpg"
+              alt="Tulips"
+              style={{
+                width: "300px",
+                height: "auto",
+                marginTop: "250px",
+              }}
+            />
           </div>
           <div>{butterflies.map((b, i) => <span key={i}>{b}</span>)}</div>
         </div>
       </div>
 
       <div className="study-plan blockBottom block">
-        <h2 style={{marginLeft: '30px'}}>Generated Study Plan</h2>
+        <h2 style={{ marginLeft: "30px" }}>Generated Study Plan</h2>
         {studyPlan ? (
           <div className="study-plan-box">
             <pre style={{ whiteSpace: "pre-wrap", textAlign: "left" }}>
-              {studyPlan.split('\n').map((line, index) => (
-                <span key={index} style={{ fontWeight: line.startsWith('Day') ? 'bold' : 'normal' }}>
+              {studyPlan.split("\n").map((line, index) => (
+                <span
+                  key={index}
+                  style={{ fontWeight: line.startsWith("Day") ? "bold" : "normal" }}
+                >
                   {line}
                   <br />
                 </span>
@@ -447,9 +495,13 @@ function Home() {
             </pre>
           </div>
         ) : (
-          <p style={{marginLeft: '30px'}}>No study plan generated yet. Please add an exam and click Generate Study Plan.</p>
+          <p style={{ marginLeft: "30px" }}>
+            No study plan generated yet. Please add an exam and click Generate Study Plan.
+          </p>
         )}
-        <button style={{marginBottom: '40px', marginLeft: '30px'}}onClick={generateStudyPlan}>Generate Study Plan</button>
+        <button style={{ marginBottom: "40px", marginLeft: "30px" }} onClick={generateStudyPlan}>
+          Generate Study Plan
+        </button>
       </div>
     </motion.div>
   );

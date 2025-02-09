@@ -32,17 +32,23 @@ input {
 }
 
 .mainBlock {
-    min-width: 40vw;
-    min-height: 50vh;
+    width: 40vw;
+    height: 70vh;
     background-color: #ccd5ae;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 .showContent {
-    display: block
+    display: block;
 }
 
 .tabcontent {
-    display:none
+    display:none;
+    height: 100%;
+    overflow: hidden;
 }
 
 .tabButton {
