@@ -291,8 +291,8 @@ function Home() {
     
     for (let index = 0; index < (window.butterflyCounter-2)/2; index++) {
       // Random horizontal and vertical positions
-      const randomX = Math.random() * (1000 - 999.9) + (999.9); // Horizontal position between 0 and 500px
-      const randomY = Math.random() * (600 - 500) + 500; // Vertical position between 0 and 500px
+      const randomX = Math.random() * 20 + 60; // Horizontal position between 0 and 500px
+      const randomY = Math.random() * 10 + 50; // Vertical position between 0 and 500px
       
       // Random animation duration between 2s and 4s
       const randomDuration = Math.random() * 2 + 2;
@@ -303,12 +303,12 @@ function Home() {
           className="butterfly"
           style={{
             position: "absolute",
-            left: `${randomX}px`,
-            top: `${randomY}px`,
+            left: `${randomX}%`,
+            top: `${randomY}%`,
             animation: `flyAround ${randomDuration}s infinite`,
           }}
         >
-          🦋
+          <img style={{width: '120px'}} src="assets/butterfly.jpg" alt="blue butterfly pixel art"></img>
         </div>
       );
     }
