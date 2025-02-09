@@ -389,13 +389,16 @@ function Home() {
                   </button>
 
                   <ul>
-                    {exams.map((exam, index) => (
-                      <li key={index}>
+                  {exams.map((exam, index) => (
+                    <li key={index} className="exam-item">
+                      <span>
                         {exam.name} - {format(new Date(exam.date), "PP")}
-                        <button onClick={() => handleSelectExam(index)}>Select</button>
-                      </li>
-                    ))}
-                  </ul>
+                      </span>
+                      <button onClick={() => handleSelectExam(index)}>Select</button>
+                    </li>
+                  ))}
+              </ul>
+
                 </motion.div>
               )}
 
