@@ -363,7 +363,7 @@ function Home() {
                   transition={{ duration: 0.5 }}
                   className="showContent"
                 >
-                  <h2>Study Calendar</h2>
+                  <h2>Calendar</h2>
                   <input
                     className="study-input"
                     type="text"
@@ -438,7 +438,7 @@ function Home() {
                     </button>
                   </div>
                   <div>
-                    <h4>
+                    <h4 style = {{marginTop: '50px'}}>
                       Time Left:{" "}
                       <div className="time-left-container">
                         <h1>{formatTime(timeLeft)}</h1>
@@ -448,7 +448,7 @@ function Home() {
                       {isPaused ? "Resume" : "Pause"}
                     </button>
                     <button className="internalButton" onClick={startTimer} disabled={isStarted}>
-                      Study!
+                      Study
                     </button>
                     <button className="internalButton" onClick={reset}>
                       Reset
@@ -462,7 +462,7 @@ function Home() {
 
         <div className="block">
           <h2 style={{ marginTop: "5px" }}>Garden</h2>
-          <button onClick={addButterfly}>Release butterflies 🦋</button>
+          <button onClick={addButterfly}>Release Butterflies 🦋</button>
           <div>
             <img
               src="/assets/tulips.jpg"
