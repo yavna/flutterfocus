@@ -29,10 +29,7 @@ input {
 .blockGarden {
     box-shadow: 10px 10px #F6D1CB;
     padding-bottom: 0;
-}
-
-.blocks {
-    display: inline-flex;
+    width: 27vw;
 }
 
 .internalButton {
@@ -146,39 +143,6 @@ input {
   border-bottom: 2px solid #2d5a2c93;
 }
 
-
-/* .tab {
-    overflow: hidden;
-    border: 1px solid #ccc;
-    background-color: #f1f1f1;
-  }
-  
-  .tab button {
-    background-color: inherit;
-    float: left;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    padding: 14px 16px;
-    transition: 0.3s;
-  }
-  
-  .tab button:hover {
-    background-color: #ddd;
-  }
-  
-  .tab button.active {
-    background-color: #ccc;
-  }
-  
-  .tabcontent {
-    display: none;
-    padding: 6px 12px;
-    border: 1px solid #ccc;
-    border-top: none; 
-  }
-  */
-
 /* Add to your Home.css */
 .butterfly {
   position: absolute;
@@ -201,5 +165,20 @@ input {
   }
   100% {
     transform: translate(-150px, -200px);
+  }
+}
+
+@media screen and (min-width: 473px) {
+  .blocks {
+    display: inline-flex;
+  }
+}
+
+@media screen and (max-width: 473px) {
+  .block {
+    width: 70vw;
+  }
+  .mainBlock {
+    width: 82vw;
   }
 }
