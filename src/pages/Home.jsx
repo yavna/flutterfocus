@@ -338,6 +338,7 @@ function Home() {
       transition={{ duration: 0.5 }}
       className="home"
     >
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
       <h1 className="title">Flutter Focus</h1>
       <div className="blocks">
         <div className="block mainBlock">
