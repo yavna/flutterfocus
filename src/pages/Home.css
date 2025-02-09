@@ -23,6 +23,12 @@ input {
 
 .blockBottom {
     background-color: #ffe99b;
+    box-shadow: 10px 10px #FFE070;
+}
+
+.blockGarden {
+    box-shadow: 10px 10px #F6D1CB;
+    padding-bottom: 0;
 }
 
 .blocks {
@@ -41,6 +47,7 @@ input {
     justify-content: space-between;
     padding: 20px;
     box-sizing: border-box;
+    box-shadow: 10px 10px #B7CDBD;
 }
 
 .showContent {
