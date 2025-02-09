@@ -464,12 +464,14 @@ function Home() {
 
         <div className="block blockGarden">
           <h2 style={{ marginTop: "5px" }}>Garden</h2>
-          <div >
+          <strong style={{fontFamily: "'Arial', bold"}}>
             Finish study sessions to earn butterflies!
-          </div>
-          <div style={{marginBottom: '20px'}}> 
+          </strong>
+          <div></div>
+          <strong style={{marginBottom: '20px', fontFamily: "'Arial', bold"}}> 
             Butterfly count: {window.butterflyCounter}
-          </div>
+          </strong>
+          <div style={{marginBottom:'20px'}}></div>
           <button style={{backgroundColor: '#FCF0EE', color: '#6c757d'}} onClick={addButterfly}>Release Butterflies 🦋</button>
           <div>
             <img
@@ -478,7 +480,7 @@ function Home() {
               style={{
                 width: "28vw",
                 height: "auto",
-                marginTop: "250px",
+                marginTop: "200px",
               }}
             />
           </div>
