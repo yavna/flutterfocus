@@ -141,14 +141,16 @@ input {
 
 .exam-item {
   font-weight: 500;
-  font-size: 17px;
+  font-size: 15px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   list-style: none;
-  padding: 12px 0; 
+  padding: 12px 0px;
   border-bottom: 2px solid #2d5a2c93;
+  width: 92%;
 }
+
 
 .butterfly {
   position: absolute;

@@ -391,7 +391,7 @@ function Home() {
                 <span>
                   {exam.name} - {format(new Date(exam.date), "PP")}
                 </span>
-                <button onClick={() => handleSelectExam(index)}>Select</button>
+                <button style={{marginRight: '0px'}}onClick={() => handleSelectExam(index)}>Select</button>
               </motion.li>
             ))}
           </AnimatePresence>
