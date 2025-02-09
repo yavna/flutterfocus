@@ -52,7 +52,8 @@ function Home() {
       console.error('Error parsing outer JSON:', err);
       return rawString;
     }
-  
+    
+    // replacing keys with readable values (couldn't figure out how else to do this) (moment of weakness)
     const replacements = {
       day: '\nDay',
       practiceProblems: 'Practice Problems',
@@ -139,7 +140,8 @@ function Home() {
         console.error('Error parsing inner studyPlan JSON:', err);
         return rawString;
       }
-    } else {
+    } 
+    else {
       let formattedPlan = JSON.stringify(parsedOuter, null, 2);
   
       formattedPlan = formattedPlan.replace(/[{}[\],"]/g, '');
@@ -154,14 +156,12 @@ function Home() {
   
 
   const generateStudyPlan = async () => {
-    if (!selectedExam) {
+    if (!selectedExam) { // ensure that an exam is selected
       alert("Please select an exam first.");
       return;
     }
   
-    try {
-      console.log("Sending request to backend...");
-  
+    try {  
       const response = await fetch("http://localhost:5000/api/generate-study-plan", {
         method: "POST",
         headers: {
@@ -180,8 +180,8 @@ function Home() {
       }
   
       const data = await response.json();
-      console.log("Raw Study Plan Data:", data);
   
+      // display the study plan to user
       const formattedPlan = formatStudyPlan(data.studyPlan);
       setStudyPlan(formattedPlan);
   
@@ -198,6 +198,7 @@ function Home() {
 
   // ui components
 
+  // input and add exam/topics to calendar tab
   const [exams, setExams] = useState([]);
   const [examName, setExamName] = useState("");
   const [examDate, setExamDate] = useState("");
@@ -221,8 +222,6 @@ function Home() {
   const [studyPlan, setStudyPlan] = useState("");
   const [hoursPerDay, setHoursPerDay] = useState("");
   const [selectedExam, setSelectedExam] = useState(null);
-
-  
 
   const startTimer = () => {
     setIsStarted(true);
@@ -296,7 +295,7 @@ function Home() {
       const randomY = Math.random() * (600 - 500) + 500; // Vertical position between 0 and 500px
       
       // Random animation duration between 2s and 4s
-      const randomDuration = Math.random() * 2 + 2; // e.g., 2s to 4s
+      const randomDuration = Math.random() * 2 + 2;
       
       newButterflies.push(
         <div
@@ -317,9 +316,8 @@ function Home() {
     setButterflies(newButterflies);
     setIsButtonClicked(true);
   
-    // Clear butterflies after a while (e.g., 3 seconds)
     setTimeout(() => {
-      setButterflies([]); // Clear butterflies after 3 seconds (or any desired duration)
+    setButterflies([]); 
     }, 3000); // This should match the flying duration
   };  
 
@@ -333,6 +331,7 @@ function Home() {
   };
 
   return (
+    // transitions for page load
     <motion.div
       initial={{ opacity: 0, y: -50 }}
       animate={{ opacity: 1, y: 0 }}
@@ -354,6 +353,7 @@ function Home() {
           <div style={{ position: "relative", height: "calc(100% - 50px)" }}>
             <AnimatePresence mode="wait">
               {toggle === 1 && (
+                // transition for tabs
                 <motion.div
                   key="calendar"
                   style={{ position: "absolute", width: "100%" }}
@@ -448,7 +448,7 @@ function Home() {
                       {isPaused ? "Resume" : "Pause"}
                     </button>
                     <button className="internalButton" onClick={startTimer} disabled={isStarted}>
-                      Study
+                      Study!
                     </button>
                     <button className="internalButton" onClick={reset}>
                       Reset
@@ -462,7 +462,7 @@ function Home() {
 
         <div className="block">
           <h2 style={{ marginTop: "5px" }}>Garden</h2>
-          <button onClick={addButterfly}>Release butterfly collection</button>
+          <button onClick={addButterfly}>Release butterflies 🦋</button>
           <div>
             <img
               src="/assets/tulips.jpg"
@@ -479,7 +479,6 @@ function Home() {
       </div>
 
       <div className="study-plan blockBottom block">
-        <h2 style={{ marginLeft: "30px" }}>Generated Study Plan</h2>
         {studyPlan ? (
           <div className="study-plan-box">
             <pre style={{ whiteSpace: "pre-wrap", textAlign: "left" }}>
@@ -496,7 +495,7 @@ function Home() {
           </div>
         ) : (
           <p style={{ marginLeft: "30px" }}>
-            No study plan generated yet. Please add an exam and click Generate Study Plan.
+            No study plan available. Please select an exam and click the button!
           </p>
         )}
         <button style={{ marginBottom: "40px", marginLeft: "30px" }} onClick={generateStudyPlan}>
