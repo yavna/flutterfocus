@@ -173,7 +173,10 @@ input {
 }
 
 @media screen and (max-width: 473px) {
-  .block, .mainBlock {
+  .block {
     width: 70vw;
+  }
+  .mainBlock {
+    width: 82vw;
   }
 }
