@@ -41,7 +41,7 @@ input {
 
 .mainBlock {
     width: 40vw;
-    height: 70vh;
+    height: 80vh;
     font-weight: 600;
     background-color: #ccd5ae;
     flex-direction: column;
