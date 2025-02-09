@@ -326,7 +326,7 @@ function Home() {
       className="home"
     >
       <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
-      <h1 className="title">Flutter Focus</h1>
+      <h1 className="title"><img src="/assets/title.jpg" alt="Title" style={{ width: '800px', height: 'auto' }} /></h1>
       <div className="blocks">
         <div className="block mainBlock">
           <div className="tabButton">
@@ -416,7 +416,6 @@ function Home() {
                       <p>{stages[stage]}</p>
                     </motion.div>
                   </div>
-                  
                   <div>
                     <input
                       type="number"
