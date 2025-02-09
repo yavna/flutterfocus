@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Oleo+Script+Swash+Caps:wght@400;700&family=Pacifico&family=Rubik+Beastly&family=Shrikhand&family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Liter&family=Markazi+Text:wght@400..700&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Oleo+Script+Swash+Caps:wght@400;700&family=Pacifico&family=Roboto:ital,wght@0,100..900;1,100..900&family=Rubik+Beastly&family=Shrikhand&family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 .title {
   font-family: "Pacifico", serif;
@@ -24,6 +25,8 @@ input {
 .blockBottom {
     background-color: #ffe99b;
     box-shadow: 10px 10px #FFE070;
+    font-weight: 500;
+    font-size: 16px;
 }
 
 .blockGarden {
@@ -38,7 +41,8 @@ input {
 
 .mainBlock {
     width: 40vw;
-    height: 70vh;
+    height: 80vh;
+    font-weight: 600;
     background-color: #ccd5ae;
     flex-direction: column;
     justify-content: space-between;
@@ -77,7 +81,7 @@ input {
     left: 0;
     width: 100%;
     height: 5px; 
-    background-color: #e9edc9; /* Color of the tab "lip" */
+    background-color: #e9edc9;
     border-radius: 5px 5px 0 0; 
 }
 
@@ -88,6 +92,7 @@ input {
   margin-bottom: 10px;
   color: #333; 
   font-family: Arial, sans-serif; 
+  font-size: 16px;
   text-align: left;
 }
 
@@ -135,15 +140,18 @@ input {
 }
 
 .exam-item {
+  font-weight: 500;
+  font-size: 15px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   list-style: none;
-  padding: 12px 0; 
+  padding: 12px 0px;
   border-bottom: 2px solid #2d5a2c93;
+  width: 92%;
 }
 
-/* Add to your Home.css */
+
 .butterfly {
   position: absolute;
   animation: flyAround 5s ease-in-out infinite;
