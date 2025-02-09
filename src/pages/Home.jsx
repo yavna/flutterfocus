@@ -221,7 +221,6 @@ function Home() {
   };
 
   const handleComplete = () => {
-    console.log("Time's up");
     incrementCounter();
   };
 
@@ -246,8 +245,9 @@ function Home() {
       interval = setInterval(() => {
         setTimeLeft((prev) => prev - 1000);
       }, 1000);
-    } else if (timeLeft <= 0) {
+    } else if (isStarted && timeLeft==0) {
       handleComplete();
+      setIsStarted(false);
     }
 
     const newStage = Math.floor((totalTime - timeLeft) / (totalTime
@@ -277,7 +277,7 @@ function Home() {
     // Set up butterflies with random positions and random animation durations
     const newButterflies = [];
     
-    for (let index = 0; index < (window.butterflyCounter-2)/2; index++) {
+    for (let index = 0; index < window.butterflyCounter; index++) {
       // Random horizontal and vertical positions
       const randomX = Math.random() * (1000 - 999.9) + (999.9); // Horizontal position between 0 and 500px
       const randomY = Math.random() * (600 - 500) + 500; // Vertical position between 0 and 500px
@@ -391,7 +391,7 @@ function Home() {
                 <span>
                   {exam.name} - {format(new Date(exam.date), "PP")}
                 </span>
-                <button style={{marginRight: '0px'}}onClick={() => handleSelectExam(index)}>Select</button>
+                <button style={{marginRight: '20px'}}onClick={() => handleSelectExam(index)}>Select</button>
               </motion.li>
             ))}
           </AnimatePresence>
@@ -464,6 +464,12 @@ function Home() {
 
         <div className="block blockGarden">
           <h2 style={{ marginTop: "5px" }}>Garden</h2>
+          <div >
+            Finish study sessions to earn butterflies!
+          </div>
+          <div style={{marginBottom: '20px'}}> 
+            Butterfly count: {window.butterflyCounter}
+          </div>
           <button style={{backgroundColor: '#FCF0EE', color: '#6c757d'}} onClick={addButterfly}>Release Butterflies 🦋</button>
           <div>
             <img
