@@ -343,7 +343,7 @@ function Home() {
         <div className="block mainBlock">
           <div className="tabButton">
             <button className="tablinks" onClick={() => handleTabClick(1)}>
-              Calendar
+              Exams
             </button>
             <button className="tablinks" onClick={() => handleTabClick(2)}>
               Study
@@ -363,7 +363,7 @@ function Home() {
                   transition={{ duration: 0.5 }}
                   className="showContent"
                 >
-                  <h2>Calendar</h2>
+                  <h2>Exams</h2>
                   <input
                     className="study-input"
                     type="text"
