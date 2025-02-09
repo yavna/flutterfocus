@@ -21,6 +21,12 @@ input {
 
 .blockBottom {
     background-color: #ffe99b;
+    box-shadow: 10px 10px #FFE070;
+}
+
+.blockGarden {
+    box-shadow: 10px 10px #F6D1CB;
+    padding-bottom: 0;
 }
 
 .blocks {
@@ -35,6 +41,7 @@ input {
     min-width: 40vw;
     min-height: 50vh;
     background-color: #ccd5ae;
+    box-shadow: 10px 10px #B7CDBD;
 }
 
 .showContent {

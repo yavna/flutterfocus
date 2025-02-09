@@ -423,7 +423,7 @@ function Home() {
             </div>
         </div>
 
-        <div className="block">
+        <div className="block blockGarden">
           <h2 style={{ marginTop: '5px'}}>Garden</h2>
           <button onClick={addButterfly}>Release butterfly collection</button>
           <div>
