@@ -9,7 +9,7 @@ import React from 'react';
 function Caterpillar() {
   return (
     <div>
-      <img src="/assets/caterpillar.jpg" alt="Caterpillar" style={{ width: '100px', height: 'auto' }} />
+      <img src="/flutterfocus/assets/caterpillar.jpg" alt="Caterpillar" style={{ width: '100px', height: 'auto' }} />
     </div>
   );
 }
@@ -17,7 +17,7 @@ function Caterpillar() {
 function Cocoon() {
   return (
     <div>
-      <img src="/assets/cocoon.jpg" alt="Cocoon" style={{ width: '100px', height: 'auto' }} />
+      <img src="/flutterfocus/assets/cocoon.jpg" alt="Cocoon" style={{ width: '100px', height: 'auto' }} />
     </div>
   );
 }
@@ -25,7 +25,7 @@ function Cocoon() {
 function Butterfly() {
   return (
     <div>
-      <img src="/assets/butterfly.jpg" alt="Butterfly" style={{ width: '100px', height: 'auto' }} />
+      <img src="/flutterfocus/assets/butterfly.jpg" alt="Butterfly" style={{ width: '100px', height: 'auto' }} />
     </div>
   );
 }
@@ -468,7 +468,7 @@ function Home() {
           <button style={{backgroundColor: '#FCF0EE', color: '#6c757d'}} onClick={addButterfly}>Release Butterflies 🦋</button>
           <div>
             <img
-              src="/assets/tulips.jpg"
+              src="/flutterfocus/assets/tulips.jpg"
               alt="Tulips"
               style={{
                 width: "300px",

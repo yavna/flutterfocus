@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://yourusername.github.io/your-repository-name",
+  "homepage": "https://yavna.github.io/flutterfocus",
   "scripts": {
     "dev": "concurrently \"vite\" \"node server/server.js\"",
     "build": "vite build",
@@ -11,7 +11,7 @@
     "preview": "vite preview",
     "start": "node server/server.js",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@google/generative-ai": "^0.21.0",
